@@ -26,6 +26,6 @@ class Scooter {
     }
 
     override fun toString(): String {
-        return "[Scooter] $name is placed is placed at $location"
+        return "[Scooter] $name is placed at $location"
     }
 }
