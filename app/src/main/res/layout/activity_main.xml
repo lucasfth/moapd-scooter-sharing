@@ -6,12 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:background="@drawable/login_background"
+    android:gravity="center_horizontal"
     tools:context=".MainActivity">
+
+
+    <ImageView
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_emergency_share_24" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_height="70dp"
+        android:layout_margin="20dp"
+        android:background="#50ffffff"
         android:orientation="horizontal">
 
         <TextView
@@ -19,35 +29,43 @@
             android:layout_width="wrap_content"
             android:layout_margin="5dp"
             android:textSize="30sp"
-            android:text="@string/scooter_name" />
+            app:drawableLeftCompat="@drawable/baseline_electric_scooter_24" />
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:textSize="30sp"
+            android:hint="@string/scooter_name"
+            android:background="#0"
+            android:textColorHint="#80ffffff"
             android:id="@+id/edit_text_name" />
         </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="74dp"
-        android:layout_margin="5dp"
+        android:layout_height="70dp"
+        android:layout_margin="20dp"
+        android:background="#50ffffff"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:layout_margin="5dp"
             android:textSize="30sp"
-            android:text="@string/location" />
+            android:drawableLeft="@drawable/baseline_add_location_24" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:textSize="30sp"
-            android:id="@+id/edit_text_location" />
+            android:background="#0"
+            android:hint="@string/location"
+            android:textColorHint="#80ffffff"
+            android:id="@+id/edit_text_location"
+            android:autofillHints="" />
         </LinearLayout>
 
     <View
@@ -59,6 +77,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_ride"
-        android:textSize="30sp" />
+        android:textSize="30sp"/>
 
 </LinearLayout>
