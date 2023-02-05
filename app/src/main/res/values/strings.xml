@@ -3,4 +3,5 @@
     <string name="start_ride">Start Ride</string>
     <string name="location">Input location</string>
     <string name="scooter_name">Input scooter name</string>
+    <string name="logo">Logo</string>
 </resources>
