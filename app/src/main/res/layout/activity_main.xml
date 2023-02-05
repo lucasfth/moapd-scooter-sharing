@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:hint="@string/scooter_name"
             android:background="@null"
             android:textColorHint="#80ffffff"
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:background="@null"
             android:hint="@string/location"
             android:textColorHint="#80ffffff"
@@ -83,6 +83,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_ride"
-        android:textSize="30sp"/>
+        android:textSize="25sp"/>
 
 </LinearLayout>
