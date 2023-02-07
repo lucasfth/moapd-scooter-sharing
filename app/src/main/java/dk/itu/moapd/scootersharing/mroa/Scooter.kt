@@ -1,30 +1,13 @@
 package dk.itu.moapd.scootersharing.mroa
 
-class Scooter {
-    private var name: String
-    private var location: String
+/**
+ * Scooter is a data class that represents a Scooter.
+ */
+data class Scooter (var name : String, var location : String) {
 
-    constructor(name: String, location: String) {
-        this.name = name
-        this.location = location
-    }
-
-    fun getName(): String {
-        return name
-    }
-
-    fun setName(name: String) {
-        this.name = name
-    }
-
-    fun getLocation(): String {
-        return location
-    }
-
-    fun setLocation(location: String) {
-        this.location = location
-    }
-
+    /**
+     * Formats how the Scooter should be made into a string
+     */
     override fun toString(): String {
         return "[Scooter] $name is placed at $location"
     }
