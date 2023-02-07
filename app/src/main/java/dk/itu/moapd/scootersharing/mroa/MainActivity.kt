@@ -34,6 +34,7 @@ import androidx.core.view.WindowCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
+import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
 
 /**
  * MainActivity is a class that starts the functionality of the Scooter Sharing app.
@@ -44,6 +45,7 @@ import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
+    private lateinit var loginInputBoxBinding: InputBoxBinding
     companion object {
         private val TAG = MainActivity::class.qualifiedName
     }
@@ -64,31 +66,51 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
+        loginInputBoxBinding = InputBoxBinding.bind(mainBinding.root)
 
-        scooterName = mainBinding.editTextName
-        scooterLocation = mainBinding.editTextLocation
+        scooterName = loginInputBoxBinding.editTextName
+        scooterLocation = loginInputBoxBinding.editTextLocation
         startRide = mainBinding.clickButtonStartRide
 
-        startRide.setOnClickListener {
-            if (scooterName.text.isNotEmpty() &&
-                    scooterLocation.text.isNotEmpty()) {
-                val name = scooterName.text.toString().trim()
-                val location = scooterLocation.text.toString().trim()
-
-                scooter.name = name
-                scooter.location = location
-
-                hideKeyboard()
-
-                scooterName.setText("")
-                scooterLocation.setText("")
-
-                printMessage()
-                showMessage()
-            }
-        }
-
+        startRide.setOnClickListener { checkInputValidity() }
         setContentView(mainBinding.root)
+    }
+
+    private fun checkInputValidity() {
+        hideKeyboard()
+        if (scooterName.text.isNotEmpty() &&
+            scooterLocation.text.isNotEmpty()) {
+            val name = scooterName.text.toString().trim()
+            val location = scooterLocation.text.toString().trim()
+
+            updateScooter(name, location)
+
+            clearInput()
+
+            printMessage()
+            showMessage(mainBinding.root, scooter.toString())
+        } else {
+            checkInputError()
+        }
+    }
+
+    private fun checkInputError() {
+        if (scooterName.text.isEmpty() && scooterLocation.text.isEmpty())
+            showMessage(mainBinding.root, "Fields need to be filled out")
+        else if (scooterName.text.isEmpty())
+            showMessage(mainBinding.root, "Scooter name is needed")
+        else
+            showMessage(mainBinding.root, "Location is needed")
+    }
+
+    private fun updateScooter(name : String, location : String) {
+        scooter.name = name
+        scooter.location = location
+    }
+
+    private fun clearInput() {
+        scooterName.setText("")
+        scooterLocation.setText("")
     }
 
     private fun hideKeyboard() {
@@ -100,10 +122,9 @@ class MainActivity : AppCompatActivity() {
         inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
-    private fun showMessage() {
-        Snackbar.make(mainBinding.root, scooter.toString(), Snackbar.LENGTH_SHORT).show()
+    private fun showMessage(root : View, message : String) {
+        Snackbar.make(root, message, Snackbar.LENGTH_SHORT).show()
     }
-
     /**
      * Prints Scooter that has been inputted into the app
      */
