@@ -10,7 +10,6 @@
     android:gravity="center_horizontal"
     tools:context=".MainActivity">
 
-
     <ImageView
         android:layout_margin="20dp"
         android:layout_width="match_parent"
@@ -22,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_margin="20dp"
-        android:background="#50ffffff"
+        android:background="@color/clear_field_white"
         android:orientation="horizontal">
 
         <TextView
@@ -39,7 +38,7 @@
             android:textSize="25sp"
             android:hint="@string/scooter_name"
             android:background="@null"
-            android:textColorHint="#80ffffff"
+            android:textColorHint="@color/clear_text_white"
             android:textColor="@color/white"
             android:id="@+id/edit_text_name"
             android:importantForAutofill="no"
@@ -50,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_margin="20dp"
-        android:background="#50ffffff"
+        android:background="@color/clear_field_white"
         android:orientation="horizontal">
 
         <TextView
@@ -67,7 +66,7 @@
             android:textSize="25sp"
             android:background="@null"
             android:hint="@string/location"
-            android:textColorHint="#80ffffff"
+            android:textColorHint="@color/clear_text_white"
             android:textColor="@color/white"
             android:id="@+id/edit_text_location"
             android:autofillHints=""
