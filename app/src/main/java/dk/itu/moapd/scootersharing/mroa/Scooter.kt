@@ -1,5 +1,7 @@
 package dk.itu.moapd.scootersharing.mroa
 
+import java.util.*
+
 /**
  * Scooter is a data class that represents a Scooter.
  */
@@ -9,6 +11,6 @@ data class Scooter (var name : String, var location : String, var timestamp: Lon
      * Formats how the Scooter should be made into a string
      */
     override fun toString(): String {
-        return "[Scooter] $name is placed at $location at timestamp $timestamp"
+        return "[Scooter] $name is placed at $location at timestamp ${Date(timestamp)}"
     }
 }
