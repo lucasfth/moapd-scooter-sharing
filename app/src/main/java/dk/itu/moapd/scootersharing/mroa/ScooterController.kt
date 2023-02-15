@@ -11,11 +11,27 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 
+/**
+ * Scooter controller
+ *
+ * Common methods that has to be used to interact
+ * with a scooter and more.
+ * Made to minimize code duplication.
+ *
+ * @constructor Create empty Scooter controller
+ */
 class ScooterController {
 
 
     /**
-     * Checks what is wrong with input
+     * Check input error
+     *
+     * Made to find out what error has occurred with the
+     * user intractable input fields.
+     *
+     * @param scooterName
+     * @param scooterLocation
+     * @param binding
      */
     fun checkInputError(scooterName: EditText, scooterLocation: EditText, binding: ViewBinding) {
         if (scooterName.text.isEmpty() && scooterLocation.text.isEmpty())
@@ -29,8 +45,15 @@ class ScooterController {
                 "Location is needed")
     }
 
+
     /**
-     * Updates scooter information
+     * Update scooter
+     *
+     * Updated scooter information
+     *
+     * @param scooter
+     * @param scooterName
+     * @param scooterLocation
      */
     fun updateScooter(scooter: Scooter, scooterName: EditText, scooterLocation: EditText) {
         scooter.name = scooterName.text.toString().trim()
@@ -38,16 +61,25 @@ class ScooterController {
         scooter.timestamp = System.currentTimeMillis()
     }
 
+
     /**
-     * Clears input text
+     * Clear input
+     *
+     * Clear user accessible input fields.
+     *
+     * @param scooterName
+     * @param scooterLocation
      */
     fun clearInput(scooterName: EditText, scooterLocation: EditText) {
         scooterName.setText("")
         scooterLocation.setText("")
     }
 
+
     /**
-     * Hides user keyboard
+     * Hide keyboard
+     *
+     * @param view
      */
     fun Context.hideKeyboard(view: View) {
         val inputMethodManager =
@@ -56,13 +88,24 @@ class ScooterController {
     }
 
     /**
-     * Shows snackbar to user with given info
+     * Show snack message
+     *
+     * Shows a snack-bar with the given information and scooter info.
+     *
+     * @param root
+     * @param message
      */
     fun showSnackMessage(root : View, message : String) {
         Snackbar.make(root, message, Snackbar.LENGTH_SHORT).show()
     }
+
     /**
-     * Prints Scooter that has been inputted into the app
+     * Print message
+     *
+     * Prints the given information and scooter info in the terminal.
+     *
+     * @param TAG
+     * @param scooter
      */
     fun printMessage(TAG: String?, scooter: Scooter) {
         Log.d(TAG, scooter.toString())

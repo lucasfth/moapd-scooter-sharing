@@ -12,22 +12,52 @@ import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityStartRideBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
 
+/**
+ * Start ride activity
+ *
+ * Activity for starting a new ride.
+ *
+ * @constructor Create empty Start ride activity
+ */
 class StartRideActivity : AppCompatActivity() {
+
+    /**
+     * Main binding
+     */
     private lateinit var mainBinding: ActivityStartRideBinding
+
+    /**
+     * Login input box binding
+     */
     private lateinit var loginInputBoxBinding: InputBoxBinding
+
+    /**
+     * Controller
+     */
     private lateinit var controller: ScooterController
     companion object {
         private val TAG = StartRideActivity::class.qualifiedName
     }
 
+    /**
+     * Scooter name
+     */
     private lateinit var scooterName: EditText
+
+    /**
+     * Scooter location
+     */
     private lateinit var scooterLocation: EditText
 
+    /**
+     * Scooter
+     */
     private val scooter: Scooter = Scooter("", "", 0)
 
     /**
-     * Called upon app start-up.
-     * Instantiates needed classes.
+     * On create
+     *
+     * @param savedInstanceState
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -49,7 +79,10 @@ class StartRideActivity : AppCompatActivity() {
     }
 
     /**
-     * Checks if user given info is valid
+     * Check input validity
+     *
+     * Checks if input is valid or not.
+     * If valid then start ride else figure out what error occured.
      */
     private fun checkInputValidity() {
         val view: View? = this.currentFocus
