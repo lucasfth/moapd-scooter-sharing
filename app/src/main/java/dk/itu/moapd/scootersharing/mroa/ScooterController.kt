@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -46,19 +44,12 @@ class ScooterController {
     }
 
 
-    /**
-     * Update scooter
-     *
-     * Updated scooter information
-     *
-     * @param scooter
-     * @param scooterName
-     * @param scooterLocation
-     */
-    fun updateScooter(scooter: Scooter, scooterName: EditText, scooterLocation: EditText) {
-        scooter.name = scooterName.text.toString().trim()
-        scooter.location = scooterLocation.text.toString().trim()
-        scooter.timestamp = System.currentTimeMillis()
+    fun createScooter(scooterName: EditText, scooterLocation: EditText) : Scooter {
+        return Scooter(
+            scooterName.text.toString().trim(),
+            scooterLocation.text.toString().trim(),
+            System.currentTimeMillis()
+        )
     }
 
 

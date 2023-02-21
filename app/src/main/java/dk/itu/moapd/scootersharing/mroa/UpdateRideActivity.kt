@@ -2,13 +2,9 @@ package dk.itu.moapd.scootersharing.mroa
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.core.view.WindowCompat
-import com.google.android.material.snackbar.Snackbar
-import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityUpdateRideBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
 
@@ -23,7 +19,7 @@ class UpdateRideActivity : AppCompatActivity() {
     private lateinit var scooterLocation: EditText
     private lateinit var controller: ScooterController
 
-    private val scooter: Scooter = Scooter("", "", 0)
+    private lateinit var scooter: Scooter
 
     /**
      * Called upon app start-up.
@@ -63,7 +59,7 @@ class UpdateRideActivity : AppCompatActivity() {
             if (scooterName.text.isNotEmpty() &&
                 scooterLocation.text.isNotEmpty()) {
 
-                updateScooter(scooter, scooterName, scooterLocation)
+                scooter = createScooter(scooterName, scooterLocation)
 
                 clearInput(scooterName, scooterLocation)
 
