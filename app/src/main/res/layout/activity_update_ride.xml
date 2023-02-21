@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:background="@drawable/login_background"
     android:gravity="center_horizontal"
-    tools:context=".MainActivity">
+    tools:context=".UpdateRideActivity">
 
     <ImageView
         android:layout_margin="20dp"
@@ -17,18 +17,21 @@
         android:src="@drawable/baseline_emergency_share_24"
         android:contentDescription="@string/logo" />
 
+    <include
+        android:id="@+id/input_box"
+        layout="@layout/input_box"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
     <Button
         android:id="@+id/click_button_update_ride"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/update_ride"
-        android:textSize="25sp"/>
-
-    <Button
-        android:id="@+id/click_button_start_ride"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/start_ride"
         android:textSize="25sp"/>
 
 </LinearLayout>
