@@ -33,6 +33,7 @@ class StartRideActivity : AppCompatActivity() {
     private lateinit var controller: ScooterController
     companion object {
         private val TAG = StartRideActivity::class.qualifiedName
+        lateinit var ridesDB : RidesDB
     }
 
     /**
@@ -58,6 +59,8 @@ class StartRideActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+        // Singleton to share an object between the app activities .
+        ridesDB = RidesDB.get (this)
         setContentView(R.layout.activity_main)
 
         mainBinding = ActivityStartRideBinding.inflate(layoutInflater)
