@@ -1,26 +1,22 @@
 package dk.itu.moapd.scootersharing.mroa
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
-import androidx.core.view.WindowCompat
-import dk.itu.moapd.scootersharing.mroa.databinding.ActivityStartRideBinding
+import dk.itu.moapd.scootersharing.mroa.databinding.FragmentStartRideBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
 
-/**
- * Start ride activity
- *
- * Activity for starting a new ride.
- *
- * @constructor Create empty Start ride activity
- */
-class StartRideActivity : AppCompatActivity() {
+class StartRideFragment : Fragment() {
 
-    /**
-     * Main binding
-     */
-    private lateinit var mainBinding: ActivityStartRideBinding
+
+    private var _binding: FragmentStartRideBinding? = null
+    private val binding
+        get() = checkNotNull(_binding) {
+            "Is the view visible?"
+        }
 
     /**
      * Login input box binding
@@ -32,8 +28,7 @@ class StartRideActivity : AppCompatActivity() {
      */
     private lateinit var controller: ScooterController
     companion object {
-        private val TAG = StartRideActivity::class.qualifiedName
-        lateinit var ridesDB : RidesDB
+        private val TAG = FragmentStartRideBinding::class.qualifiedName
     }
 
     /**
@@ -56,25 +51,32 @@ class StartRideActivity : AppCompatActivity() {
      *
      * @param savedInstanceState
      */
-    override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        super.onCreate(savedInstanceState)
-        // Singleton to share an object between the app activities .
-        ridesDB = RidesDB.get (this)
-        setContentView(R.layout.activity_main)
 
-        mainBinding = ActivityStartRideBinding.inflate(layoutInflater)
-        loginInputBoxBinding = InputBoxBinding.bind(mainBinding.root)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        _binding = FragmentStartRideBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loginInputBoxBinding = InputBoxBinding.bind(binding.root)
 
         scooterName = loginInputBoxBinding.editTextName
         scooterLocation = loginInputBoxBinding.editTextLocation
         controller = ScooterController()
 
-        with (mainBinding) {
+        with (binding) {
             clickButtonStartRide.setOnClickListener { checkInputValidity() }
         }
-
-        setContentView(mainBinding.root)
     }
 
     /**
@@ -84,10 +86,10 @@ class StartRideActivity : AppCompatActivity() {
      * If valid then start ride else figure out what error occured.
      */
     private fun checkInputValidity() {
-        val view: View? = this.currentFocus
+        val view: View? = activity?.currentFocus
         with(controller) {
             if (view != null) {
-                hideKeyboard(view)
+                activity?.hideKeyboard(view)
             }
             if (scooterName.text.isNotEmpty() &&
                 scooterLocation.text.isNotEmpty()) {
@@ -97,9 +99,9 @@ class StartRideActivity : AppCompatActivity() {
                 clearInput(scooterName, scooterLocation)
 
                 printMessage(TAG, scooter)
-                showSnackMessage(mainBinding.root, scooter.toString())
+                showSnackMessage(binding.root, scooter.toString())
             } else {
-                checkInputError(scooterName, scooterLocation, mainBinding)
+                checkInputError(scooterName, scooterLocation, binding)
             }
         }
     }

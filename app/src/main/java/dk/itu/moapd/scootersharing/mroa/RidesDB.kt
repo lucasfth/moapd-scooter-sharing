@@ -16,6 +16,213 @@ class RidesDB private constructor (context : Context) {
         rides.add(
             Scooter("CPH003", "Lufthavn", randomDate())
         )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
+        rides.add(
+            Scooter("CPH001", "ITU", randomDate())
+        )
+        rides.add(
+            Scooter("CPH002", "Fields", randomDate())
+        )
+        rides.add(
+            Scooter("CPH003", "Lufthavn", randomDate())
+        )
     }
     fun getRidesList() : List <Scooter> {
         return rides

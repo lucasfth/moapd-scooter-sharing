@@ -52,31 +52,20 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+        //WindowCompat.setDecorFitsSystemWindows(window, false)
         // Singleton to share an object between the app activities .
         ridesDB = RidesDB.get (this)
         setContentView(R.layout.activity_main)
 
+        val fm = supportFragmentManager
+
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
-        with (mainBinding) {
-            clickButtonStartRide.setOnClickListener {
-                val intent = Intent(baseContext, StartRideActivity::class.java)
-                startActivity(intent)
-            }
+        val fragmentTransaction = fm.beginTransaction()
 
-            clickButtonUpdateRide.setOnClickListener{
-                val intent = Intent(baseContext, UpdateRideActivity::class.java)
-                startActivity(intent)
-            }
-
-            clickButtonListRides.setOnClickListener{
-                val intent = Intent(baseContext, ListRidesActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
+        fragmentTransaction.add(R.id.fragment_container_view, MainFragment())
+        fragmentTransaction.commit()
         setContentView(mainBinding.root)
     }
 }
