@@ -11,12 +11,20 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_startRideFragment"
+            android:id="@+id/show_start_ride"
             app:destination="@id/startRideFragment" />
+        <action
+            android:id="@+id/show_update_ride"
+            app:destination="@id/updateRideFragment" />
     </fragment>
     <fragment
         android:id="@+id/startRideFragment"
         android:name="dk.itu.moapd.scootersharing.mroa.StartRideFragment"
         android:label="fragment_start_ride"
         tools:layout="@layout/fragment_start_ride" />
+    <fragment
+        android:id="@+id/updateRideFragment"
+        android:name="dk.itu.moapd.scootersharing.mroa.UpdateRideFragment"
+        android:label="fragment_update_ride"
+        tools:layout="@layout/fragment_update_ride"/>
 </navigation>

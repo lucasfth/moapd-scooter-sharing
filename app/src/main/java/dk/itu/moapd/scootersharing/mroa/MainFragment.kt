@@ -3,11 +3,13 @@ package dk.itu.moapd.scootersharing.mroa
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.WindowCompat
+import androidx.navigation.fragment.NavHostFragment
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
 
@@ -40,15 +42,16 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val navHostFragment = activity?.supportFragmentManager
+            ?.findFragmentById(R.id.fragment_container_view) as NavHostFragment
+        val navController = navHostFragment.navController
         with (binding) {
             clickButtonStartRide.setOnClickListener {
-                activity?.supportFragmentManager?.beginTransaction()?.add(R.id.fragment_container_view, StartRideFragment())?.commit()
+                navController.navigate(R.id.show_start_ride)
             }
 
             clickButtonUpdateRide.setOnClickListener{
-                val intent = Intent(activity, dk.itu.moapd.scootersharing.mroa.UpdateRideActivity::class.java)
-                startActivity(intent)
+                navController.navigate(R.id.show_update_ride)
             }
 
             clickButtonListRides.setOnClickListener{

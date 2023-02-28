@@ -32,6 +32,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import androidx.core.view.WindowCompat
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
@@ -56,16 +57,8 @@ class MainActivity : AppCompatActivity() {
         //WindowCompat.setDecorFitsSystemWindows(window, false)
         // Singleton to share an object between the app activities .
         ridesDB = RidesDB.get (this)
-        setContentView(R.layout.activity_main)
-
-        val fm = supportFragmentManager
-
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
-        val fragmentTransaction = fm.beginTransaction()
-
-        fragmentTransaction.add(R.id.fragment_container_view, MainFragment())
-        fragmentTransaction.commit()
         setContentView(mainBinding.root)
     }
 }
