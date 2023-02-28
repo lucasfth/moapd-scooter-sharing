@@ -13,9 +13,21 @@ import androidx.navigation.fragment.NavHostFragment
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
 
+/**
+ * Main fragment
+ *
+ * @constructor Create empty Main fragment
+ */
 class MainFragment : Fragment() {
 
+    /**
+     * _binding
+     */
     private var _binding: FragmentMainBinding? = null
+
+    /**
+     * Binding
+     */
     private val binding
         get() = checkNotNull(_binding) {
             "Is the view visible?"
@@ -26,11 +38,23 @@ class MainFragment : Fragment() {
         lateinit var ridesDB : RidesDB
     }
 
+    /**
+     * On create
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
+    /**
+     * On create view
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +64,12 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * On view created
+     *
+     * @param view
+     * @param savedInstanceState
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navHostFragment = activity?.supportFragmentManager
@@ -61,6 +91,10 @@ class MainFragment : Fragment() {
         }
     }
 
+    /**
+     * On destroy view
+     *
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

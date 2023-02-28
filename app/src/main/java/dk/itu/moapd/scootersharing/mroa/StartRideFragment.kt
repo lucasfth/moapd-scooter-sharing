@@ -9,10 +9,22 @@ import android.widget.EditText
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentStartRideBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
 
+/**
+ * Start ride fragment
+ *
+ * @constructor Create empty Start ride fragment
+ */
 class StartRideFragment : Fragment() {
 
 
+    /**
+     * _binding
+     */
     private var _binding: FragmentStartRideBinding? = null
+
+    /**
+     * Binding
+     */
     private val binding
         get() = checkNotNull(_binding) {
             "Is the view visible?"
@@ -51,12 +63,19 @@ class StartRideFragment : Fragment() {
      *
      * @param savedInstanceState
      */
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
 
+    /**
+     * On create view
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,6 +85,12 @@ class StartRideFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * On view created
+     *
+     * @param view
+     * @param savedInstanceState
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loginInputBoxBinding = InputBoxBinding.bind(binding.root)
@@ -82,8 +107,9 @@ class StartRideFragment : Fragment() {
     /**
      * Check input validity
      *
-     * Checks if input is valid or not.
-     * If valid then start ride else figure out what error occured.
+     * Used to ensure that what the user has typed in is correct
+     * If not the it will check what error the user has done
+     * in the ScooterController::checkInputError
      */
     private fun checkInputValidity() {
         val view: View? = activity?.currentFocus

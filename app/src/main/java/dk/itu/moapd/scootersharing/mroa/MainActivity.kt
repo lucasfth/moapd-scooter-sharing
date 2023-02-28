@@ -38,13 +38,16 @@ import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
 
 /**
- * MainActivity is a class that starts the functionality of the Scooter Sharing app.
+ * Main activity
  *
- * @author Mads Roager (mroa) and Lucas Hanson (luha)
+ * @constructor Create empty Main activity
  */
 
 class MainActivity : AppCompatActivity() {
 
+    /**
+     * Main binding
+     */
     private lateinit var mainBinding: ActivityMainBinding
     companion object {
         private val TAG = MainActivity::class.qualifiedName
@@ -52,6 +55,11 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    /**
+     * On create
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //WindowCompat.setDecorFitsSystemWindows(window, false)

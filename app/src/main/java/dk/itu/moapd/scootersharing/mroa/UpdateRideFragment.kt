@@ -10,6 +10,11 @@ import dk.itu.moapd.scootersharing.mroa.databinding.FragmentStartRideBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentUpdateRideBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
 
+/**
+ * Update ride fragment
+ *
+ * @constructor Create empty Update ride fragment
+ */
 class UpdateRideFragment : Fragment() {
 
     private var _binding: FragmentUpdateRideBinding? = null
@@ -55,6 +60,14 @@ class UpdateRideFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    /**
+     * On create view
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,6 +77,12 @@ class UpdateRideFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * On view created
+     *
+     * @param view
+     * @param savedInstanceState
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loginInputBoxBinding = InputBoxBinding.bind(binding.root)
@@ -82,8 +101,9 @@ class UpdateRideFragment : Fragment() {
     /**
      * Check input validity
      *
-     * Checks if input is valid or not.
-     * If valid then start ride else figure out what error occured.
+     * Used to ensure that what the user has typed in is correct
+     * If not the it will check what error the user has done
+     * in the ScooterController::checkInputError
      */
     private fun checkInputValidity() {
         val view: View? = activity?.currentFocus

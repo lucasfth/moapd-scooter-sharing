@@ -6,6 +6,11 @@ import androidx.core.view.WindowCompat
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityListRidesBinding
 
 
+/**
+ * List rides activity
+ *
+ * @constructor Create empty List rides activity
+ */
 class ListRidesActivity : AppCompatActivity() {
     /**
      * Main binding
@@ -17,6 +22,11 @@ class ListRidesActivity : AppCompatActivity() {
         private lateinit var adapter: CustomArrayAdapter
     }
 
+    /**
+     * On create
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         //WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
