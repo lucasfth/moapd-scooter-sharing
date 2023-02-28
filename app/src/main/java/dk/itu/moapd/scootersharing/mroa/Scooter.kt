@@ -5,7 +5,7 @@ import java.util.*
 /**
  * Scooter is a data class that represents a Scooter.
  */
-data class Scooter (var name : String, var location : String, var timestamp: Long) {
+data class Scooter (val name : String, var location : String, var timestamp: Long) {
 
     /**
      * Formats how the Scooter should be made into a string

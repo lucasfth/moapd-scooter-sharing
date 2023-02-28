@@ -5,4 +5,5 @@
     <string name="location">Input location</string>
     <string name="scooter_name">Input scooter name</string>
     <string name="logo">Logo</string>
+    <string name="list_rides">List rides</string>
 </resources>

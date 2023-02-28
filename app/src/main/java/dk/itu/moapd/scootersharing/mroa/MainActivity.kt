@@ -47,12 +47,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
     companion object {
         private val TAG = MainActivity::class.qualifiedName
+        lateinit var ridesDB : RidesDB
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+        // Singleton to share an object between the app activities .
+        ridesDB = RidesDB.get (this)
         setContentView(R.layout.activity_main)
 
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -65,6 +68,11 @@ class MainActivity : AppCompatActivity() {
 
             clickButtonUpdateRide.setOnClickListener{
                 val intent = Intent(baseContext, UpdateRideActivity::class.java)
+                startActivity(intent)
+            }
+
+            clickButtonListRides.setOnClickListener{
+                val intent = Intent(baseContext, ListRidesActivity::class.java)
                 startActivity(intent)
             }
         }

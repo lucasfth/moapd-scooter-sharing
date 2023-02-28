@@ -2,13 +2,9 @@ package dk.itu.moapd.scootersharing.mroa
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.core.view.WindowCompat
-import com.google.android.material.snackbar.Snackbar
-import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityStartRideBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
 
@@ -37,6 +33,7 @@ class StartRideActivity : AppCompatActivity() {
     private lateinit var controller: ScooterController
     companion object {
         private val TAG = StartRideActivity::class.qualifiedName
+        lateinit var ridesDB : RidesDB
     }
 
     /**
@@ -52,7 +49,7 @@ class StartRideActivity : AppCompatActivity() {
     /**
      * Scooter
      */
-    private val scooter: Scooter = Scooter("", "", 0)
+    private lateinit var scooter: Scooter
 
     /**
      * On create
@@ -62,6 +59,8 @@ class StartRideActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+        // Singleton to share an object between the app activities .
+        ridesDB = RidesDB.get (this)
         setContentView(R.layout.activity_main)
 
         mainBinding = ActivityStartRideBinding.inflate(layoutInflater)
@@ -93,7 +92,7 @@ class StartRideActivity : AppCompatActivity() {
             if (scooterName.text.isNotEmpty() &&
                 scooterLocation.text.isNotEmpty()) {
 
-                updateScooter(scooter, scooterName, scooterLocation)
+                scooter = createScooter(scooterName, scooterLocation)
 
                 clearInput(scooterName, scooterLocation)
 
