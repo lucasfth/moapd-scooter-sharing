@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import dk.itu.moapd.scootersharing.mroa.databinding.FragmentStartRideBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentUpdateRideBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
 
@@ -52,15 +51,6 @@ class UpdateRideFragment : Fragment() {
     private lateinit var scooter: Scooter
 
     /**
-     * On create
-     *
-     * @param savedInstanceState
-     */
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    /**
      * On create view
      *
      * @param inflater
@@ -71,7 +61,7 @@ class UpdateRideFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentUpdateRideBinding.inflate(inflater, container, false)
         return binding.root
