@@ -32,18 +32,22 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import androidx.core.view.WindowCompat
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
 
 /**
- * MainActivity is a class that starts the functionality of the Scooter Sharing app.
+ * Main activity
  *
- * @author Mads Roager (mroa) and Lucas Hanson (luha)
+ * @constructor Create empty Main activity
  */
 
 class MainActivity : AppCompatActivity() {
 
+    /**
+     * Main binding
+     */
     private lateinit var mainBinding: ActivityMainBinding
     companion object {
         private val TAG = MainActivity::class.qualifiedName
@@ -51,31 +55,17 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    /**
+     * On create
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+        //WindowCompat.setDecorFitsSystemWindows(window, false)
         // Singleton to share an object between the app activities .
         ridesDB = RidesDB.get (this)
-        setContentView(R.layout.activity_main)
-
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
-
-        with (mainBinding) {
-            clickButtonStartRide.setOnClickListener {
-                val intent = Intent(baseContext, StartRideActivity::class.java)
-                startActivity(intent)
-            }
-
-            clickButtonUpdateRide.setOnClickListener{
-                val intent = Intent(baseContext, UpdateRideActivity::class.java)
-                startActivity(intent)
-            }
-
-            clickButtonListRides.setOnClickListener{
-                val intent = Intent(baseContext, ListRidesActivity::class.java)
-                startActivity(intent)
-            }
-        }
 
         setContentView(mainBinding.root)
     }

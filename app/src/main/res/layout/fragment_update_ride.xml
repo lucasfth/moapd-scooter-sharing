@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:background="@drawable/login_background"
     android:gravity="center_horizontal"
-    tools:context=".StartRideActivity">
+    tools:context=".StartRideFragment">
 
     <ImageView
         android:layout_margin="20dp"
@@ -31,7 +31,7 @@
         android:id="@+id/click_button_start_ride"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start_ride"
+        android:text="@string/update_ride"
         android:textSize="25sp"/>
 
 </LinearLayout>

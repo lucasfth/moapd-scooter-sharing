@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.WindowCompat
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityListRidesBinding
-import dk.itu.moapd.scootersharing.mroa.databinding.ActivityStartRideBinding
 
 
+/**
+ * List rides activity
+ *
+ * @constructor Create empty List rides activity
+ */
 class ListRidesActivity : AppCompatActivity() {
     /**
      * Main binding
@@ -18,8 +22,13 @@ class ListRidesActivity : AppCompatActivity() {
         private lateinit var adapter: CustomArrayAdapter
     }
 
+    /**
+     * On create
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        //WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         // Singleton to share an object between the app activities .
         ridesDB = RidesDB.get (this)
