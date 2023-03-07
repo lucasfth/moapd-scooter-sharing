@@ -129,16 +129,13 @@ class MainFragment : Fragment() {
         }
     }
 
-    inner class ViewHolder(private val binding: ListRidesBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val listBinding: ListRidesBinding) :
+        RecyclerView.ViewHolder(listBinding.root) {
         fun bind(scooter: Scooter) {
-            with (binding) {
-                scooterName.text = root.context.getString(
-                    R.string.scooter_name)
-                scooterLocation.text = root.context.getString(
-                    R.string.scooter_location)
-                scooterTimestamp.text = root.context.getString(
-                    R.string.scooter_timestamp)
+            with (listBinding) {
+                scooterName.text = scooter.name
+                scooterLocation.text = scooter.location
+                scooterTimestamp.text = scooter.timestamp.toString()
             }
         }
     }
