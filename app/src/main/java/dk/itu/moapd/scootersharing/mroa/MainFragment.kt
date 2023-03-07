@@ -12,6 +12,7 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dk.itu.moapd.scootersharing.mroa.databinding.ListRidesBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
@@ -129,9 +130,15 @@ class MainFragment : Fragment() {
             val item = data[position]
             holder.bind(item)
             holder.itemView.setOnClickListener {
-                scooterController.showSnackMessage(binding.root, "Clicked on ${item.name} placed at ${item.location}")
-                ridesDB.deleteScooter(item.name)
-                adapter.notifyDataSetChanged()
+                MaterialAlertDialogBuilder(activity!!)
+                    .setTitle("Deletion Confirmation Alertion!!")
+                    .setMessage("Do you really want to delete ${item.name}???")
+                    .setNeutralButton("Cencelado") { dialog, which -> }
+                    .setPositiveButton("Yesh please") {dialog, which ->
+                        ridesDB.deleteScooter(item.name)
+                        adapter.notifyDataSetChanged()
+                        scooterController.showSnackMessage(binding.root, "Deleted ${item.name} placed at ${item.location}")
+                    }.show()
             }
         }
     }
