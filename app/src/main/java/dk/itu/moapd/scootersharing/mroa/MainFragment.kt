@@ -23,6 +23,8 @@ import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
  */
 class MainFragment : Fragment() {
 
+    private lateinit var scooterController: ScooterController
+
     /**
      * _binding
      */
@@ -50,6 +52,7 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ridesDB = activity?.let { RidesDB.get(it) }!!
+        scooterController = ScooterController()
     }
 
     /**
@@ -122,10 +125,14 @@ class MainFragment : Fragment() {
             return ViewHolder(binding)
         }
         override fun getItemCount() = data.size
-        override fun onBindViewHolder(holder: ViewHolder,
-                                      position: Int) {
-            val dummy = data[position]
-            holder.bind(dummy)
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val item = data[position]
+            holder.bind(item)
+            holder.itemView.setOnClickListener {
+                scooterController.showSnackMessage(binding.root, "Clicked on ${item.name} placed at ${item.location}")
+                ridesDB.deleteScooter(item.name)
+                adapter.notifyDataSetChanged()
+            }
         }
     }
 

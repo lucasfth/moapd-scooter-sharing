@@ -2,6 +2,7 @@ package dk.itu.moapd.scootersharing.mroa
 
 import android.content.Context
 import java.util.Random
+import java.util.function.Predicate
 import kotlin.collections.ArrayList
 
 /**
@@ -33,25 +34,25 @@ class RidesDB private constructor (context : Context) {
             Scooter("CPH003", "Lufthavn", randomDate())
         )
         rides.add(
-            Scooter("CPH001", "ITU", randomDate())
+            Scooter("CPH004", "ITU", randomDate())
         )
         rides.add(
-            Scooter("CPH002", "Fields", randomDate())
+            Scooter("CPH005", "Fields", randomDate())
         )
         rides.add(
-            Scooter("CPH003", "Lufthavn", randomDate())
+            Scooter("CPH006", "Lufthavn", randomDate())
         )
         rides.add(
-            Scooter("CPH001", "ITU", randomDate())
+            Scooter("CPH007", "ITU", randomDate())
         )
         rides.add(
-            Scooter("CPH002", "Fields", randomDate())
+            Scooter("CPH008", "Fields", randomDate())
         )
         rides.add(
-            Scooter("CPH003", "Lufthavn", randomDate())
+            Scooter("CPH009", "Lufthavn", randomDate())
         )
         rides.add(
-            Scooter("CPH001", "ITU", randomDate())
+            Scooter("CPH010", "ITU", randomDate())
         )
         rides.add(
             Scooter("CPH002", "Fields", randomDate())
@@ -258,7 +259,6 @@ class RidesDB private constructor (context : Context) {
      */
     fun addScooter(name : String, location : String) {
         val scooter = Scooter(name, location, System.currentTimeMillis())
-        rides.add(scooter)
     }
 
     /**
@@ -288,6 +288,12 @@ class RidesDB private constructor (context : Context) {
     fun getCurrentScooterInfo() : String {
         return rides.last().toString()
     }
+
+    fun deleteScooter(name : String) {
+        val predicate = Predicate { s : Scooter -> s.name == name}
+        rides.removeIf(predicate)
+    }
+
     /**
      * Generate a random timestamp in the last 365 days .
      *
