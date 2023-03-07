@@ -10,13 +10,6 @@
     android:gravity="center_horizontal"
     tools:context=".StartRideFragment">
 
-    <ImageView
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/baseline_emergency_share_24"
-        android:contentDescription="@string/logo" />
-
     <include
         android:id="@+id/input_box"
         layout="@layout/input_box"
