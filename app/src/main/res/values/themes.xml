@@ -20,4 +20,6 @@
     <style name="Theme.ScooterSharing.AppBarOverlay"
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.ScooterSharing.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Base.Theme.FirebaseAuthentication" parent="Theme.Material3.DayNight.NoActionBar" />
+    <style name="Theme.FirebaseAuthentication" parent="Base.Theme.FirebaseAuthentication" />
 </resources>

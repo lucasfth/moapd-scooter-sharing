@@ -25,6 +25,7 @@ package dk.itu.moapd.scootersharing.mroa.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.firebase.auth.FirebaseAuth
 import dk.itu.moapd.scootersharing.mroa.RidesDB
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 

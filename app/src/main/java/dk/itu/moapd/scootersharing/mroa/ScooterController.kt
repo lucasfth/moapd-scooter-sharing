@@ -87,7 +87,7 @@ class ScooterController {
      * @param root
      * @param message
      */
-    fun showSnackMessage(root : View, message : String) {
+     fun showSnackMessage(root : View, message : String) {
         Snackbar.make(root, message, Snackbar.LENGTH_SHORT).show()
     }
 
