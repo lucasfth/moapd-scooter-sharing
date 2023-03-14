@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
+import dk.itu.moapd.scootersharing.mroa.models.Scooter
 
 /**
  * Scooter controller

@@ -21,21 +21,12 @@
  * SOFTWARE.
  */
 
-package dk.itu.moapd.scootersharing.mroa
+package dk.itu.moapd.scootersharing.mroa.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import androidx.core.view.WindowCompat
-import androidx.navigation.fragment.NavHostFragment
-import com.google.android.material.snackbar.Snackbar
+import dk.itu.moapd.scootersharing.mroa.RidesDB
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
-import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
 
 /**
  * Main activity

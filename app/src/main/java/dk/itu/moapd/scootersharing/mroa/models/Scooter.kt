@@ -1,4 +1,4 @@
-package dk.itu.moapd.scootersharing.mroa
+package dk.itu.moapd.scootersharing.mroa.models
 
 import java.util.*
 

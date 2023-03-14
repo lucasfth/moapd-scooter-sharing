@@ -1,4 +1,4 @@
-package dk.itu.moapd.scootersharing.mroa
+package dk.itu.moapd.scootersharing.mroa.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import dk.itu.moapd.scootersharing.mroa.ScooterController
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentStartRideBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.InputBoxBinding
+import dk.itu.moapd.scootersharing.mroa.models.Scooter
 
 /**
  * Start ride fragment

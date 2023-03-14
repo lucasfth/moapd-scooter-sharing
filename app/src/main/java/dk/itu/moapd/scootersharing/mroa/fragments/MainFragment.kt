@@ -1,20 +1,21 @@
-package dk.itu.moapd.scootersharing.mroa
+package dk.itu.moapd.scootersharing.mroa.fragments
 
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dk.itu.moapd.scootersharing.mroa.R
+import dk.itu.moapd.scootersharing.mroa.RidesDB
+import dk.itu.moapd.scootersharing.mroa.models.Scooter
+import dk.itu.moapd.scootersharing.mroa.ScooterController
+import dk.itu.moapd.scootersharing.mroa.activities.ListRidesActivity
 import dk.itu.moapd.scootersharing.mroa.databinding.ListRidesBinding
-import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
 
 /**
@@ -98,7 +99,7 @@ class MainFragment : Fragment() {
             }
 
             clickButtonListRides.setOnClickListener{
-                val intent = Intent(activity, dk.itu.moapd.scootersharing.mroa.ListRidesActivity::class.java)
+                val intent = Intent(activity, ListRidesActivity::class.java)
                 startActivity(intent)
             }
         }
