@@ -1,4 +1,4 @@
-package dk.itu.moapd.scootersharing.mroa
+package dk.itu.moapd.scootersharing.mroa.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import dk.itu.moapd.scootersharing.mroa.R
+import dk.itu.moapd.scootersharing.mroa.models.Scooter
 
 /**
  * Custom array adapter

@@ -1,20 +1,23 @@
-package dk.itu.moapd.scootersharing.mroa
+package dk.itu.moapd.scootersharing.mroa.fragments
 
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
+import dk.itu.moapd.scootersharing.mroa.R
+import dk.itu.moapd.scootersharing.mroa.RidesDB
+import dk.itu.moapd.scootersharing.mroa.models.Scooter
+import dk.itu.moapd.scootersharing.mroa.ScooterController
+import dk.itu.moapd.scootersharing.mroa.activities.ListRidesActivity
+import dk.itu.moapd.scootersharing.mroa.activities.LoginActivity
 import dk.itu.moapd.scootersharing.mroa.databinding.ListRidesBinding
-import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
 
 /**
@@ -23,6 +26,11 @@ import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
  * @constructor Create empty Main fragment
  */
 class MainFragment : Fragment() {
+
+    /**
+     * todo
+     */
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var scooterController: ScooterController
 
@@ -54,6 +62,7 @@ class MainFragment : Fragment() {
         super.onCreate(savedInstanceState)
         ridesDB = activity?.let { RidesDB.get(it) }!!
         scooterController = ScooterController()
+        auth = FirebaseAuth.getInstance()
     }
 
     /**
@@ -98,10 +107,36 @@ class MainFragment : Fragment() {
             }
 
             clickButtonListRides.setOnClickListener{
-                val intent = Intent(activity, dk.itu.moapd.scootersharing.mroa.ListRidesActivity::class.java)
+                val intent = Intent(activity, ListRidesActivity::class.java)
                 startActivity(intent)
             }
+
+            clickButtonSignOut.setOnClickListener{
+                auth.signOut()
+                startLoginActivity()
+            }
         }
+    }
+
+    /**
+     * todo
+     */
+    override fun onStart() {
+        super.onStart()
+        if (auth.currentUser == null)
+            startLoginActivity()
+        val user = auth.currentUser
+        // mainBinding.description
+    }
+
+    /**
+     * todo
+     */
+    private fun startLoginActivity() {
+        val intent = Intent(activity, LoginActivity::class.java)
+
+        startActivity(intent)
+        activity?.finish()
     }
 
     /**

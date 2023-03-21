@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:background="@drawable/login_background"
     android:gravity="center_horizontal"
-    tools:context=".StartRideFragment">
+    tools:context=".fragments.StartRideFragment">
 
     <include
         android:id="@+id/input_box"

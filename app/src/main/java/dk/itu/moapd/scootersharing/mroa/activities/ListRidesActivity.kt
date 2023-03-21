@@ -1,8 +1,10 @@
-package dk.itu.moapd.scootersharing.mroa
+package dk.itu.moapd.scootersharing.mroa.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.view.WindowCompat
+import dk.itu.moapd.scootersharing.mroa.R
+import dk.itu.moapd.scootersharing.mroa.RidesDB
+import dk.itu.moapd.scootersharing.mroa.adapters.CustomArrayAdapter
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityListRidesBinding
 
 

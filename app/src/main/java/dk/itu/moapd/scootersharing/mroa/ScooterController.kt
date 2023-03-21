@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
+import dk.itu.moapd.scootersharing.mroa.models.Scooter
 
 /**
  * Scooter controller
@@ -86,7 +87,7 @@ class ScooterController {
      * @param root
      * @param message
      */
-    fun showSnackMessage(root : View, message : String) {
+     fun showSnackMessage(root : View, message : String) {
         Snackbar.make(root, message, Snackbar.LENGTH_SHORT).show()
     }
 
