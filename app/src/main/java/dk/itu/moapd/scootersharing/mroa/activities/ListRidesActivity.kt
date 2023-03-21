@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import dk.itu.moapd.scootersharing.mroa.R
 import dk.itu.moapd.scootersharing.mroa.RidesDB
-import dk.itu.moapd.scootersharing.mroa.adapters.CustomArrayAdapter
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityListRidesBinding
 
 
