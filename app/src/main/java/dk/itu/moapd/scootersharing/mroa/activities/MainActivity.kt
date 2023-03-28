@@ -23,10 +23,13 @@
 
 package dk.itu.moapd.scootersharing.mroa.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
-import dk.itu.moapd.scootersharing.mroa.RidesDB
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 
 /**
@@ -41,9 +44,14 @@ class MainActivity : AppCompatActivity() {
      * Main binding
      */
     private lateinit var mainBinding: ActivityMainBinding
+
+    private var DATABASE_URL = "https://moapd-scooter-sharing-default-rtdb.europe-west1.firebasedatabase.app"
+
+
     companion object {
         private val TAG = MainActivity::class.qualifiedName
-        lateinit var ridesDB : RidesDB
+        lateinit var auth: FirebaseAuth
+        lateinit var database: DatabaseReference
     }
 
 
@@ -56,9 +64,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //WindowCompat.setDecorFitsSystemWindows(window, false)
         // Singleton to share an object between the app activities .
-        ridesDB = RidesDB.get (this)
+        auth = FirebaseAuth.getInstance()
+        database = Firebase.database(DATABASE_URL).reference
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(mainBinding.root)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (auth.currentUser == null)
+            startLoginActivity()
+    }
+
+    /**
+     * todo
+     */
+    private fun startLoginActivity() {
+        val intent = Intent(this, LoginActivity::class.java)
+
+        startActivity(intent)
+        finish()
     }
 }

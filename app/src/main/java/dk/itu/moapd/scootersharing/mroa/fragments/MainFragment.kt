@@ -17,8 +17,8 @@ import com.google.firebase.ktx.Firebase
 import dk.itu.moapd.scootersharing.mroa.R
 import dk.itu.moapd.scootersharing.mroa.models.Scooter
 import dk.itu.moapd.scootersharing.mroa.ScooterController
-import dk.itu.moapd.scootersharing.mroa.activities.ListRidesActivity
 import dk.itu.moapd.scootersharing.mroa.activities.LoginActivity
+import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.adapters.FirebaseAdapter
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
 import dk.itu.moapd.scootersharing.mroa.interfaces.ItemClickListener
@@ -33,11 +33,9 @@ class MainFragment : Fragment(), ItemClickListener {
     /**
      * todo
      */
-    private lateinit var auth: FirebaseAuth
 
-    private var DATABASE_URL = "https://console.firebase.google.com/u/0/project/moapd-scooter-sharing/database/moapd-scooter-sharing-default-rtdb/data/~2F"
 
-    private lateinit var database: DatabaseReference
+
 
     private lateinit var scooterController: ScooterController
 
@@ -67,12 +65,12 @@ class MainFragment : Fragment(), ItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         scooterController = ScooterController()
-        auth = FirebaseAuth.getInstance()
-        database = Firebase.database(DATABASE_URL).reference
-        auth.currentUser?.let {
-            val query = database.child("scooters")
+
+
+
+        MainActivity.auth.currentUser?.let {
+            val query = MainActivity.database.child("scooters")
                 .child(it.uid)
-                .orderByChild("timestamp")
             val options = FirebaseRecyclerOptions.Builder<Scooter>()
                 .setQuery(query, Scooter::class.java)
                 .setLifecycleOwner(this)
@@ -121,37 +119,11 @@ class MainFragment : Fragment(), ItemClickListener {
                 navController.navigate(R.id.show_update_ride)
             }
 
-            clickButtonListRides.setOnClickListener{
-                val intent = Intent(activity, ListRidesActivity::class.java)
-                startActivity(intent)
-            }
-
             clickButtonSignOut.setOnClickListener{
-                auth.signOut()
+                MainActivity.auth.signOut()
                 startLoginActivity()
             }
         }
-    }
-
-    /**
-     * todo
-     */
-    override fun onStart() {
-        super.onStart()
-        if (auth.currentUser == null)
-            startLoginActivity()
-        val user = auth.currentUser
-        // mainBinding.description
-    }
-
-    /**
-     * todo
-     */
-    private fun startLoginActivity() {
-        val intent = Intent(activity, LoginActivity::class.java)
-
-        startActivity(intent)
-        activity?.finish()
     }
 
     /**
@@ -173,6 +145,16 @@ class MainFragment : Fragment(), ItemClickListener {
                 scooterController.showSnackMessage(binding.root,
                     "Deleted ${scooter.name} placed at ${scooter.location}")
             }.show()
+    }
+
+    /**
+     * todo
+     */
+    private fun startLoginActivity() {
+        val intent = Intent(activity, LoginActivity::class.java)
+
+        startActivity(intent)
+        activity?.finish()
     }
 }
 
