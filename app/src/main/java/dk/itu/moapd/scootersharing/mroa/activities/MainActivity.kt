@@ -30,6 +30,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 
 /**
@@ -47,11 +49,14 @@ class MainActivity : AppCompatActivity() {
 
     private var DATABASE_URL = "https://moapd-scooter-sharing-default-rtdb.europe-west1.firebasedatabase.app"
 
+    private var BUCKET_URL = "gs://moapd-scooter-sharing.appspot.com"
+
 
     companion object {
         private val TAG = MainActivity::class.qualifiedName
         lateinit var auth: FirebaseAuth
         lateinit var database: DatabaseReference
+        lateinit var storage: FirebaseStorage
     }
 
 
@@ -66,13 +71,11 @@ class MainActivity : AppCompatActivity() {
         // Singleton to share an object between the app activities .
         auth = FirebaseAuth.getInstance()
         database = Firebase.database(DATABASE_URL).reference
+        storage = Firebase.storage(BUCKET_URL)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(mainBinding.root)
-    }
 
-    override fun onStart() {
-        super.onStart()
         if (auth.currentUser == null)
             startLoginActivity()
     }
