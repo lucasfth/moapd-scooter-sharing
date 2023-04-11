@@ -1,6 +1,7 @@
 package dk.itu.moapd.scootersharing.mroa.fragments
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,29 +9,38 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.DrawableTransformation
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import dk.itu.moapd.scootersharing.mroa.R
-import dk.itu.moapd.scootersharing.mroa.RidesDB
 import dk.itu.moapd.scootersharing.mroa.models.Scooter
 import dk.itu.moapd.scootersharing.mroa.ScooterController
-import dk.itu.moapd.scootersharing.mroa.activities.ListRidesActivity
 import dk.itu.moapd.scootersharing.mroa.activities.LoginActivity
-import dk.itu.moapd.scootersharing.mroa.databinding.ListRidesBinding
+import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
+import dk.itu.moapd.scootersharing.mroa.adapters.FirebaseAdapter
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
+import dk.itu.moapd.scootersharing.mroa.interfaces.ItemClickListener
+import java.util.*
 
 /**
  * Main fragment
  *
  * @constructor Create empty Main fragment
  */
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), ItemClickListener {
 
     /**
      * todo
      */
-    private lateinit var auth: FirebaseAuth
+
+
+
 
     private lateinit var scooterController: ScooterController
 
@@ -49,8 +59,7 @@ class MainFragment : Fragment() {
 
     companion object {
         private val TAG = MainFragment::class.qualifiedName
-        lateinit var ridesDB : RidesDB
-        private lateinit var adapter: CustomAdapter
+        private lateinit var adapter: FirebaseAdapter
     }
 
     /**
@@ -60,9 +69,19 @@ class MainFragment : Fragment() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ridesDB = activity?.let { RidesDB.get(it) }!!
         scooterController = ScooterController()
-        auth = FirebaseAuth.getInstance()
+
+
+
+        MainActivity.auth.currentUser?.let {
+            val query = MainActivity.database.child("scooters")
+                .child(it.uid)
+            val options = FirebaseRecyclerOptions.Builder<Scooter>()
+                .setQuery(query, Scooter::class.java)
+                .setLifecycleOwner(this)
+                .build()
+            adapter = FirebaseAdapter(this, options)
+        }
     }
 
     /**
@@ -90,10 +109,18 @@ class MainFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CustomAdapter(ridesDB.getRidesList())
         val navHostFragment = activity?.supportFragmentManager
             ?.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
+
+        // val filename = UUID.randomUUID().toString()
+        MainActivity.storage.child("scooters").child("scotter.png").downloadUrl.addOnSuccessListener {
+            Glide.with(binding.logo.context)
+                .load(it)
+                .centerCrop()
+                .into(binding.logo)
+        }
+
         with (binding) {
             mainList.layoutManager = LinearLayoutManager(activity)
             mainList.adapter = adapter
@@ -106,37 +133,11 @@ class MainFragment : Fragment() {
                 navController.navigate(R.id.show_update_ride)
             }
 
-            clickButtonListRides.setOnClickListener{
-                val intent = Intent(activity, ListRidesActivity::class.java)
-                startActivity(intent)
-            }
-
             clickButtonSignOut.setOnClickListener{
-                auth.signOut()
+                MainActivity.auth.signOut()
                 startLoginActivity()
             }
         }
-    }
-
-    /**
-     * todo
-     */
-    override fun onStart() {
-        super.onStart()
-        if (auth.currentUser == null)
-            startLoginActivity()
-        val user = auth.currentUser
-        // mainBinding.description
-    }
-
-    /**
-     * todo
-     */
-    private fun startLoginActivity() {
-        val intent = Intent(activity, LoginActivity::class.java)
-
-        startActivity(intent)
-        activity?.finish()
     }
 
     /**
@@ -148,45 +149,26 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
-    private inner class CustomAdapter(
-        private val data: List<Scooter>) :
-        RecyclerView.Adapter<ViewHolder>() {
-
-        //ArrayAdapter<Scooter>(context, R.layout.list_rides, data) {
-        override fun onCreateViewHolder(parent: ViewGroup,
-                                        viewType: Int): ViewHolder {
-            val inflater = LayoutInflater.from(parent.context)
-            val binding = ListRidesBinding.inflate(
-                inflater, parent, false)
-            return ViewHolder(binding)
-        }
-        override fun getItemCount() = data.size
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val item = data[position]
-            holder.bind(item)
-            holder.itemView.setOnClickListener {
-                MaterialAlertDialogBuilder(activity!!)
-                    .setTitle("Deletion Confirmation Alertion!!")
-                    .setMessage("Do you really want to delete ${item.name}???")
-                    .setNeutralButton("Cancelado") { dialog, which -> }
-                    .setPositiveButton("Yesh please") {dialog, which ->
-                        ridesDB.deleteScooter(item.name)
-                        adapter.notifyDataSetChanged()
-                        scooterController.showSnackMessage(binding.root, "Deleted ${item.name} placed at ${item.location}")
-                    }.show()
-            }
-        }
+    override fun onItemClickListener(scooter: Scooter, position: Int) {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle("Deletion Confirmation Alertion!!")
+            .setMessage("Do you really want to delete ${scooter.name}???")
+            .setNeutralButton("Cancelado") { dialog, which -> }
+            .setPositiveButton("Yesh please") {dialog, which ->
+                adapter.getRef(position).removeValue()
+                scooterController.showSnackMessage(binding.root,
+                    "Deleted ${scooter.name} placed at ${scooter.location}")
+            }.show()
     }
 
-    inner class ViewHolder(private val listBinding: ListRidesBinding) :
-        RecyclerView.ViewHolder(listBinding.root) {
-        fun bind(scooter: Scooter) {
-            with (listBinding) {
-                scooterName.text = scooter.name
-                scooterLocation.text = scooter.location
-                scooterTimestamp.text = scooter.timestamp.toString()
-            }
-        }
+    /**
+     * todo
+     */
+    private fun startLoginActivity() {
+        val intent = Intent(activity, LoginActivity::class.java)
+
+        startActivity(intent)
+        activity?.finish()
     }
 }
 
