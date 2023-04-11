@@ -1,6 +1,8 @@
 package dk.itu.moapd.scootersharing.mroa.fragments
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -27,6 +29,8 @@ import dk.itu.moapd.scootersharing.mroa.adapters.FirebaseAdapter
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
 import dk.itu.moapd.scootersharing.mroa.interfaces.ItemClickListener
 import java.util.*
+import kotlin.collections.ArrayList
+import com.google.android.gms.location.*
 
 /**
  * Main fragment
@@ -60,6 +64,7 @@ class MainFragment : Fragment(), ItemClickListener {
     companion object {
         private val TAG = MainFragment::class.qualifiedName
         private lateinit var adapter: FirebaseAdapter
+        private const val ALL_PERMISSIONS_RESULT = 1011
     }
 
     /**
@@ -113,11 +118,20 @@ class MainFragment : Fragment(), ItemClickListener {
             ?.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
 
+        val permissions: ArrayList<String> = ArrayList()
+        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+
+        val permissionsToRequest = permissionsToRequest(permissions)
+
+        if (permissionsToRequest.size > 0) {
+            requestPermissions(permissionsToRequest.toTypedArray(), ALL_PERMISSIONS_RESULT)
+        }
+
         // val filename = UUID.randomUUID().toString()
         MainActivity.storage.child("scooters").child("scotter.png").downloadUrl.addOnSuccessListener {
             Glide.with(binding.logo.context)
                 .load(it)
-                .centerCrop()
                 .into(binding.logo)
         }
 
@@ -138,6 +152,15 @@ class MainFragment : Fragment(), ItemClickListener {
                 startLoginActivity()
             }
         }
+    }
+
+    private fun permissionsToRequest(permissions: ArrayList<String>) : ArrayList<String> {
+        val result: ArrayList<String> = ArrayList()
+        for (permission in permissions) {
+            if (requireActivity().checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED)
+                result.add(permission)
+        }
+        return result
     }
 
     /**
