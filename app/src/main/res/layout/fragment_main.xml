@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/baseline_emergency_share_24"
-        android:contentDescription="@string/logo" />
+        android:contentDescription="@string/logo"
+        android:id="@+id/logo"/>
 
     <Button
         android:id="@+id/click_button_update_ride"

@@ -1,6 +1,7 @@
 package dk.itu.moapd.scootersharing.mroa.fragments
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.DrawableTransformation
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +26,7 @@ import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.adapters.FirebaseAdapter
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
 import dk.itu.moapd.scootersharing.mroa.interfaces.ItemClickListener
+import java.util.*
 
 /**
  * Main fragment
@@ -107,6 +112,15 @@ class MainFragment : Fragment(), ItemClickListener {
         val navHostFragment = activity?.supportFragmentManager
             ?.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
+
+        // val filename = UUID.randomUUID().toString()
+        MainActivity.storage.child("scooters").child("scotter.png").downloadUrl.addOnSuccessListener {
+            Glide.with(binding.logo.context)
+                .load(it)
+                .centerCrop()
+                .into(binding.logo)
+        }
+
         with (binding) {
             mainList.layoutManager = LinearLayoutManager(activity)
             mainList.adapter = adapter

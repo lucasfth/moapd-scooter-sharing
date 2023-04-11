@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
 
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         private val TAG = MainActivity::class.qualifiedName
         lateinit var auth: FirebaseAuth
         lateinit var database: DatabaseReference
-        lateinit var storage: FirebaseStorage
+        lateinit var storage: StorageReference
     }
 
 
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         // Singleton to share an object between the app activities .
         auth = FirebaseAuth.getInstance()
         database = Firebase.database(DATABASE_URL).reference
-        storage = Firebase.storage(BUCKET_URL)
+        storage = Firebase.storage(BUCKET_URL).reference
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(mainBinding.root)
