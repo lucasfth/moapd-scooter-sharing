@@ -11,4 +11,6 @@
     <string name="sign_out">Sign out</string>
     <string name="available_rides">Scooter List</string>
     <string name="account_name">LH</string>
+    <string name="scooter_sharing">Scooter Sharing</string>
+    <string name="admin">Admin</string>
 </resources>

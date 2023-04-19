@@ -86,9 +86,7 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         with (mainBinding) {
-            clickButtonSettings.setOnClickListener{
-                Log.d(TAG, "Recognise settings button")
-            }
+
         }
     }
 

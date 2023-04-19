@@ -11,20 +11,38 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/show_start_ride"
-            app:destination="@id/startRideFragment" />
+            android:id="@+id/show_settings"
+            app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="dk.itu.moapd.scootersharing.mroa.fragments.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/show_admin_page"
+            app:destination="@id/adminFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateRideFragment"
+        android:name="dk.itu.moapd.scootersharing.mroa.fragments.UpdateRideFragment"
+        android:label="fragment_update_ride"
+        tools:layout="@layout/fragment_update_ride"/>
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="dk.itu.moapd.scootersharing.mroa.fragments.AdminFragment"
+        android:label="fragment_admin"
+        tools:layout="@layout/fragment_admin" >
         <action
             android:id="@+id/show_update_ride"
             app:destination="@id/updateRideFragment" />
+        <action
+            android:id="@+id/show_start_ride"
+            app:destination="@id/startRideFragment" />
     </fragment>
     <fragment
         android:id="@+id/startRideFragment"
         android:name="dk.itu.moapd.scootersharing.mroa.fragments.StartRideFragment"
         android:label="fragment_start_ride"
         tools:layout="@layout/fragment_start_ride" />
-    <fragment
-        android:id="@+id/updateRideFragment"
-        android:name="dk.itu.moapd.scootersharing.mroa.fragments.UpdateRideFragment"
-        android:label="fragment_update_ride"
-        tools:layout="@layout/fragment_update_ride"/>
 </navigation>

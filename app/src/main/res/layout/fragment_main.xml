@@ -4,53 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:background="@drawable/login_background"
+    android:fitsSystemWindows="true"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
     tools:context=".fragments.MainFragment">
 
-    <ImageView
-        android:layout_margin="20dp"
+    <LinearLayout
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/baseline_emergency_share_24"
-        android:contentDescription="@string/logo"
-        android:id="@+id/logo"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/scooter_sharing"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            />
 
-    <Button
-        android:id="@+id/click_button_update_ride"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/update_ride"
-        android:textSize="25sp"/>
+        <Button
+            android:id="@+id/click_button_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:layout_margin="20dp"
+            android:text="@string/account_name"
+            android:textSize="25sp"/>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/click_button_start_ride"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/start_ride"
-        android:textSize="25sp"/>
-
-    <Button
-        android:id="@+id/click_button_list_rides"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/list_rides"
-        android:textSize="25sp"/>
-
-    <Button
-        android:id="@+id/click_button_sign_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_out"
-        android:textSize="25sp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_list"
-        android:layout_margin="20dp"
-        android:background="@color/white"/>
-
+        android:layout_height="match_parent">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map_fragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </LinearLayout>

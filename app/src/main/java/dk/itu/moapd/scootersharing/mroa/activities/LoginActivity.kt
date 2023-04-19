@@ -55,6 +55,7 @@ class LoginActivity : AppCompatActivity() {
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
+            .setIsSmartLockEnabled(false)
             .setLogo(R.drawable.baseline_emergency_share_24)
             .setTheme(R.style.Theme_FirebaseAuthentication)
             .build()
