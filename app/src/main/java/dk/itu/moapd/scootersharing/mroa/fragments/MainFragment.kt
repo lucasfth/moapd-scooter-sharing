@@ -1,40 +1,26 @@
 package dk.itu.moapd.scootersharing.mroa.fragments
 
 import android.Manifest
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
+import android.location.Location
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.DrawableTransformation
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import dk.itu.moapd.scootersharing.mroa.R
-import dk.itu.moapd.scootersharing.mroa.models.Scooter
-import dk.itu.moapd.scootersharing.mroa.ScooterController
-import dk.itu.moapd.scootersharing.mroa.activities.LoginActivity
-import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
-import dk.itu.moapd.scootersharing.mroa.adapters.FirebaseAdapter
-import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
-import dk.itu.moapd.scootersharing.mroa.interfaces.ItemClickListener
-import java.util.*
-import kotlin.collections.ArrayList
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import dk.itu.moapd.scootersharing.mroa.R
+import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
+import dk.itu.moapd.scootersharing.mroa.services.LocationService
+import java.util.*
+
 
 /**
  * Main fragment
@@ -56,6 +42,24 @@ class MainFragment : Fragment(), OnMapReadyCallback {
             "Is the view visible?"
         }
 
+    private lateinit var myReciever : MyReceiver
+
+    var mLocationService : LocationService? = null
+
+    var mBound = false
+
+    private val mServiceConnection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName, service: IBinder) {
+            val binder: LocationService.LocalBinder = service as LocationService.LocalBinder
+            mLocationService = binder.getService()
+            mBound = true
+        }
+
+        override fun onServiceDisconnected(name: ComponentName) {
+            mLocationService = null
+            mBound = false
+        }
+    }
     companion object {
         private val TAG = MainFragment::class.qualifiedName
         private const val ALL_PERMISSIONS_RESULT = 1011
@@ -63,8 +67,9 @@ class MainFragment : Fragment(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        myReciever = MyReceiver()
     }
+
 
     /**
      * On create view
@@ -95,7 +100,6 @@ class MainFragment : Fragment(), OnMapReadyCallback {
             ?.findFragmentById(R.id.fragment_container_view) as NavHostFragment
 
         val navController = navHostFragment.navController
-
 
         val permissions: ArrayList<String> = ArrayList()
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -137,6 +141,7 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         if (checkPermission())
             return
 
+
         val mapFragment = requireActivity().supportFragmentManager
             .findFragmentById(R.id.map_fragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -151,6 +156,16 @@ class MainFragment : Fragment(), OnMapReadyCallback {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    class MyReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            val location: Location? =
+                intent.getParcelableExtra(LocationService.EXTRA_LOCATION)
+            if (location != null) {
+                // Some logic
+            }
+        }
     }
 }
 
