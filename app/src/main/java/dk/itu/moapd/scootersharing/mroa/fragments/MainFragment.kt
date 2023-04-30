@@ -2,6 +2,7 @@ package dk.itu.moapd.scootersharing.mroa.fragments
 
 import android.Manifest
 import android.content.*
+import android.content.Context.BIND_AUTO_CREATE
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -68,8 +69,26 @@ class MainFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         myReciever = MyReceiver()
+        val permissions: ArrayList<String> = ArrayList()
+        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+
+        val permissionsToRequest = permissionsToRequest(permissions)
+
+        if (permissionsToRequest.size > 0) {
+            requestPermissions(permissionsToRequest.toTypedArray(),
+                ALL_PERMISSIONS_RESULT
+            )
+        }
+
     }
 
+    override fun onResume() {
+        super.onResume()
+        Intent(requireContext(), LocationService::class.java).also {
+            requireActivity().bindService(it, mServiceConnection, BIND_AUTO_CREATE)
+        }
+    }
 
     /**
      * On create view
@@ -101,15 +120,7 @@ class MainFragment : Fragment(), OnMapReadyCallback {
 
         val navController = navHostFragment.navController
 
-        val permissions: ArrayList<String> = ArrayList()
-        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
-        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-        val permissionsToRequest = permissionsToRequest(permissions)
-
-        if (permissionsToRequest.size > 0) {
-            requestPermissions(permissionsToRequest.toTypedArray(), ALL_PERMISSIONS_RESULT)
-        }
 
 
 
@@ -156,6 +167,8 @@ class MainFragment : Fragment(), OnMapReadyCallback {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        requireActivity().unbindService(mServiceConnection)
+        mBound = false
     }
 
     class MyReceiver : BroadcastReceiver() {
