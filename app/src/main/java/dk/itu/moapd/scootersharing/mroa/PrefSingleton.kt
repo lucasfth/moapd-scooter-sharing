@@ -1,3 +1,5 @@
+package dk.itu.moapd.scootersharing.mroa
+
 import android.content.Context
 import android.content.SharedPreferences
 

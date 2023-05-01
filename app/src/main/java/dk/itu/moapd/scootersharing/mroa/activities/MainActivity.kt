@@ -23,21 +23,17 @@
 
 package dk.itu.moapd.scootersharing.mroa.activities
 
-import PrefSingleton
+import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import dk.itu.moapd.scootersharing.mroa.R
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
-import com.google.android.gms.maps.SupportMapFragment
 
 /**
  * Main activity

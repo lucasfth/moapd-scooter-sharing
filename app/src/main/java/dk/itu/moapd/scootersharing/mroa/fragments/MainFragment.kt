@@ -1,11 +1,9 @@
 package dk.itu.moapd.scootersharing.mroa.fragments
 
-import PrefSingleton
 import android.Manifest
 import android.content.*
 import android.content.Context.BIND_AUTO_CREATE
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.os.IBinder
 import android.view.LayoutInflater
@@ -14,7 +12,6 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment

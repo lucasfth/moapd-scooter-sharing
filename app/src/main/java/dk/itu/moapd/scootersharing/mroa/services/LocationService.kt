@@ -1,6 +1,6 @@
 package dk.itu.moapd.scootersharing.mroa.services
 
-import PrefSingleton
+import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 import android.Manifest
 import android.app.*
 import android.content.Intent
