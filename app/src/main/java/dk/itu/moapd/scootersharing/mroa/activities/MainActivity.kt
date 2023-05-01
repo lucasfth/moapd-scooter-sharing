@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         lateinit var auth: FirebaseAuth
         lateinit var database: DatabaseReference
         lateinit var storage: StorageReference
-        lateinit var prefSingleton: PrefSingleton
     }
 
 
@@ -74,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         storage = Firebase.storage(BUCKET_URL).reference
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
-        prefSingleton = PrefSingleton.getInstance(this)
+        PrefSingleton.getInstance(this)
 
         setContentView(mainBinding.root)
 

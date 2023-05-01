@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 import dk.itu.moapd.scootersharing.mroa.R
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
@@ -116,7 +117,7 @@ class MainFragment : Fragment(), OnMapReadyCallback {
 
         val navController = navHostFragment.navController
 
-        print("\n It is from the motherfucking fragment ----------- ${MainActivity.prefSingleton.getLat()} ${MainActivity.prefSingleton.getLng()} -----------\n")
+        print("\n It is from the motherfucking fragment ----------- ${PrefSingleton.getLat()} ${PrefSingleton.getLng()} -----------\n")
 
         with (binding) {
             clickButtonSettings.setOnClickListener {

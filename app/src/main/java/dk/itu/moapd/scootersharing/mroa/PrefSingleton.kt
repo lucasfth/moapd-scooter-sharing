@@ -8,9 +8,8 @@ object PrefSingleton {
 
     private lateinit var prefs: SharedPreferences
 
-    fun getInstance(context: Context): PrefSingleton {
+    fun getInstance(context: Context) {
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return this
     }
 
     fun getLat(): Float {
