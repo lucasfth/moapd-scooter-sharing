@@ -8,7 +8,7 @@ object PrefSingleton {
 
     private lateinit var prefs: SharedPreferences
 
-    fun getInstance(context: Context) {
+    fun init(context: Context) {
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
 
