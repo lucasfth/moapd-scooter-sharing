@@ -1,23 +1,15 @@
 package dk.itu.moapd.scootersharing.mroa.services
 
+import PrefSingleton
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.*
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.*
 import android.provider.ContactsContract.Directory.PACKAGE_NAME
-import android.support.*
-import android.support.v4.*
-import android.support.v4.app.*
-import android.util.*
 import androidx.core.app.ActivityCompat
-import java.util.*
 import com.google.android.gms.location.*
-import dk.itu.moapd.scootersharing.mroa.fragments.MainFragment
-import java.util.ArrayList
-import android.content.*
 import android.os.IBinder
 
 
@@ -92,6 +84,8 @@ class LocationService : Service() {
     }
 
     private fun sendLocationBroadcast(location: Location) {
+        PrefSingleton.setLat(location.latitude)
+        PrefSingleton.setLng(location.longitude)
         println(location.toString())
     }
 

@@ -23,6 +23,7 @@
 
 package dk.itu.moapd.scootersharing.mroa.activities
 
+import PrefSingleton
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var auth: FirebaseAuth
         lateinit var database: DatabaseReference
         lateinit var storage: StorageReference
+        lateinit var prefSingleton: PrefSingleton
     }
 
 
@@ -75,6 +77,8 @@ class MainActivity : AppCompatActivity() {
         database = Firebase.database(DATABASE_URL).reference
         storage = Firebase.storage(BUCKET_URL).reference
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
+
+        prefSingleton = PrefSingleton.getInstance(this)
 
         setContentView(mainBinding.root)
 

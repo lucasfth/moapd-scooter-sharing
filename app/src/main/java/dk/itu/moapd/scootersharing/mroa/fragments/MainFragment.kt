@@ -1,5 +1,6 @@
 package dk.itu.moapd.scootersharing.mroa.fragments
 
+import PrefSingleton
 import android.Manifest
 import android.content.*
 import android.content.Context.BIND_AUTO_CREATE
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import dk.itu.moapd.scootersharing.mroa.R
+import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
 import dk.itu.moapd.scootersharing.mroa.services.LocationService
 import java.util.*
@@ -43,8 +45,6 @@ class MainFragment : Fragment(), OnMapReadyCallback {
             "Is the view visible?"
         }
 
-    private lateinit var myReciever : MyReceiver
-
     var mLocationService : LocationService? = null
 
     var mBound = false
@@ -68,7 +68,6 @@ class MainFragment : Fragment(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        myReciever = MyReceiver()
         val permissions: ArrayList<String> = ArrayList()
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -120,9 +119,7 @@ class MainFragment : Fragment(), OnMapReadyCallback {
 
         val navController = navHostFragment.navController
 
-
-
-
+        print("\n It is from the motherfucking fragment ----------- ${MainActivity.prefSingleton.getLat()} ${MainActivity.prefSingleton.getLng()} -----------\n")
 
         with (binding) {
             clickButtonSettings.setOnClickListener {
@@ -169,16 +166,6 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         _binding = null
         requireActivity().unbindService(mServiceConnection)
         mBound = false
-    }
-
-    class MyReceiver : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent) {
-            val location: Location? =
-                intent.getParcelableExtra(LocationService.EXTRA_LOCATION)
-            if (location != null) {
-                // Some logic
-            }
-        }
     }
 }
 
