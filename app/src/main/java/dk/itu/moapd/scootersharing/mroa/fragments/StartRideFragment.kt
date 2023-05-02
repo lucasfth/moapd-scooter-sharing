@@ -51,25 +51,12 @@ class StartRideFragment : Fragment() {
      */
     private lateinit var scooterName: EditText
 
-    /**
-     * Scooter location
-     */
-    private lateinit var scooterLocation: EditText
 
     /**
      * Scooter
      */
     private lateinit var scooter: Scooter
 
-    /**
-     * On create
-     *
-     * @param savedInstanceState
-     */
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     /**
      * On create view
@@ -99,7 +86,7 @@ class StartRideFragment : Fragment() {
         loginInputBoxBinding = InputBoxBinding.bind(binding.root)
 
         scooterName = loginInputBoxBinding.editTextName
-        scooterLocation = loginInputBoxBinding.editTextLocation
+
         controller = ScooterController()
 
         with (binding) {
@@ -120,10 +107,9 @@ class StartRideFragment : Fragment() {
             if (view != null) {
                 activity?.hideKeyboard(view)
             }
-            if (scooterName.text.isNotEmpty() &&
-                scooterLocation.text.isNotEmpty()) {
+            if (scooterName.text.isNotEmpty()) {
 
-                scooter = createScooter(scooterName, scooterLocation)
+                scooter = createScooter(scooterName)
                 val auth = MainActivity.auth
                 val database = MainActivity.database
                 auth.currentUser?.let { user ->
@@ -137,12 +123,12 @@ class StartRideFragment : Fragment() {
                             .setValue(scooter)
                     }
                 }
-                clearInput(scooterName, scooterLocation)
+                clearInput(scooterName)
 
                 printMessage(TAG, scooter)
                 showSnackMessage(binding.root, scooter.toString())
             } else {
-                checkInputError(scooterName, scooterLocation, binding)
+                checkInputError(scooterName, binding)
             }
         }
     }

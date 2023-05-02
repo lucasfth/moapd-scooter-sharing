@@ -12,16 +12,16 @@ object PrefSingleton {
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-    fun getLat(): Float {
-        return prefs.getFloat("lat", 0f)
+    fun getLat(): Double {
+        return prefs.getFloat("lat", 0f).toDouble()
     }
 
     fun setLat(lat: Double) {
         prefs.edit().putFloat("lat", lat.toFloat()).apply()
     }
 
-    fun getLng(): Float {
-        return prefs.getFloat("lng", 0f)
+    fun getLng(): Double {
+        return prefs.getFloat("lng", 0f).toDouble()
     }
 
     fun setLng(lng: Double) {

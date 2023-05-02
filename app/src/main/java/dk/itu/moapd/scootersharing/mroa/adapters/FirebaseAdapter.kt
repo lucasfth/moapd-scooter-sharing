@@ -17,7 +17,8 @@ class FirebaseAdapter (private val itemClickListener: ItemClickListener, options
             fun bind (scooter: Scooter) {
                 with (binding) {
                     scooterName.text = scooter.name
-                    scooterLocation.text = scooter.location
+                    scooterLat.text = scooter.lat.toString()
+                    scooterLon.text = scooter.lng.toString()
                     scooterTimestamp.text = Date(scooter.timestamp!!).toString()
                 }
             }

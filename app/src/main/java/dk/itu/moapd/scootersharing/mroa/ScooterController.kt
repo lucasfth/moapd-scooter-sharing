@@ -32,8 +32,8 @@ class ScooterController {
      * @param scooterLocation
      * @param binding
      */
-    fun checkInputError(scooterName: EditText, scooterLocation: EditText, binding: ViewBinding) {
-        if (scooterName.text.isEmpty() && scooterLocation.text.isEmpty())
+    fun checkInputError(scooterName: EditText, binding: ViewBinding) {
+        if (scooterName.text.isEmpty())
             showSnackMessage(binding.root,
                 "Fields need to be filled out")
         else if (scooterName.text.isEmpty())
@@ -45,11 +45,12 @@ class ScooterController {
     }
 
 
-    fun createScooter(scooterName: EditText, scooterLocation: EditText) : Scooter {
+    fun createScooter(scooterName: EditText) : Scooter {
         val scooter = Scooter(
             scooterName.text.toString().trim(),
-            scooterLocation.text.toString().trim(),
-            System.currentTimeMillis()
+            System.currentTimeMillis(),
+            PrefSingleton.getLat(),
+            PrefSingleton.getLng()
         )
 
         return scooter
@@ -64,9 +65,8 @@ class ScooterController {
      * @param scooterName
      * @param scooterLocation
      */
-    fun clearInput(scooterName: EditText, scooterLocation: EditText) {
+    fun clearInput(scooterName: EditText) {
         scooterName.setText("")
-        scooterLocation.setText("")
     }
 
 

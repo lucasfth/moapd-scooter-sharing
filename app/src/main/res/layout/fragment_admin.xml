@@ -11,13 +11,6 @@
     tools:context=".fragments.AdminFragment">
 
     <Button
-        android:id="@+id/click_button_update_ride"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/update_ride"
-        android:textSize="25sp" />
-
-    <Button
         android:id="@+id/click_button_start_ride"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

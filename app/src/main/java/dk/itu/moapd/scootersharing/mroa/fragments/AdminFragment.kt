@@ -53,10 +53,6 @@ class AdminFragment : Fragment() {
             clickButtonStartRide.setOnClickListener {
                 navController.navigate(R.id.show_start_ride)
             }
-
-            clickButtonUpdateRide.setOnClickListener{
-                navController.navigate(R.id.show_update_ride)
-            }
         }
     }
 

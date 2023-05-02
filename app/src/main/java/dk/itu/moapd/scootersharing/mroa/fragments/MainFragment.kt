@@ -6,6 +6,7 @@ import android.content.Context.BIND_AUTO_CREATE
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,11 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 import dk.itu.moapd.scootersharing.mroa.R
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
@@ -52,6 +58,9 @@ class MainFragment : Fragment(), OnMapReadyCallback {
 
     var mBound = false
 
+    var scooterRef = MainActivity.database.child("scooters")
+
+
     private val mServiceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             val binder: LocationService.LocalBinder = service as LocationService.LocalBinder
@@ -75,7 +84,7 @@ class MainFragment : Fragment(), OnMapReadyCallback {
             requireActivity().bindService(it, mServiceConnection, BIND_AUTO_CREATE)
         }
     }
-    
+
     /**
      * On create view
      *
@@ -120,6 +129,8 @@ class MainFragment : Fragment(), OnMapReadyCallback {
                 navController.navigate(R.id.show_settings)
             }
         }
+
+
     }
 
     private fun requestUserPermissions() {
@@ -167,6 +178,26 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(PrefSingleton.getLat().toDouble(),
             PrefSingleton.getLng().toDouble()
         ), 13f))
+
+        scooterRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot){
+                for (ds in dataSnapshot.children) {
+                    val name = ds.child("name").value
+                    val lat = ds.child("lat").value
+                    val lng = ds.child("lng").value
+                    val position = LatLng(lat as Double, lng as Double)
+                    map.addMarker(
+                        MarkerOptions()
+                            .title(name as String?)
+                            .position(position)
+                    )
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
     }
 
     /**

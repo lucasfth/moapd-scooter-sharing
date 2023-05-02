@@ -97,7 +97,7 @@ class AccountFragment : Fragment(), ItemClickListener {
             .setPositiveButton("Yesh please") {dialog, which ->
                 adapter.getRef(position).removeValue()
                 scooterController.showSnackMessage(binding.root,
-                    "Deleted ${scooter.name} placed at ${scooter.location}")
+                    "Deleted ${scooter.name} placed at ${scooter.lat}, ${scooter.lng}")
             }.show()
     }
 
