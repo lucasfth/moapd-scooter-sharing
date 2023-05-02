@@ -37,4 +37,9 @@
         android:name="dk.itu.moapd.scootersharing.mroa.fragments.StartRideFragment"
         android:label="fragment_start_ride"
         tools:layout="@layout/fragment_start_ride" />
+    <fragment
+        android:id="@+id/selectedScooterFragment"
+        android:name="dk.itu.moapd.scootersharing.mroa.fragments.SelectedScooterFragment"
+        android:label="fragment_selected_scooter"
+        tools:layout="@layout/fragment_selected_scooter" />
 </navigation>
