@@ -9,10 +9,13 @@ import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.LocationSource
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import dk.itu.moapd.scootersharing.mroa.PrefSingleton
@@ -64,27 +67,15 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         private const val ALL_PERMISSIONS_RESULT = 1011
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val permissions: ArrayList<String> = ArrayList()
-        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
-        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
-
-        val permissionsToRequest = permissionsToRequest(permissions)
-
-        if (permissionsToRequest.size > 0) {
-            requestPermissions(permissionsToRequest.toTypedArray(),
-                ALL_PERMISSIONS_RESULT
-            )
-        }
-
-    }
-
     override fun onResume() {
         super.onResume()
         Intent(requireContext(), LocationService::class.java).also {
             requireActivity().bindService(it, mServiceConnection, BIND_AUTO_CREATE)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 
     /**
@@ -99,8 +90,15 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+
+        val mapFragment = childFragmentManager
+            .findFragmentById(R.id.map_fragment) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+        requestUserPermissions()
+
         return binding.root
     }
 
@@ -126,6 +124,24 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    private fun requestUserPermissions() {
+
+        // An array with location-aware permissions.
+        val permissions: ArrayList<String> = ArrayList()
+        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+
+        // Check which permissions is needed to ask to the user.
+        val permissionsToRequest = permissionsToRequest(permissions)
+
+        // Show the permissions dialogs to the user.
+        if (permissionsToRequest.size > 0)
+            requestPermissions(
+                permissionsToRequest.toTypedArray(),
+                0
+            )
+    }
+
     private fun permissionsToRequest(permissions: ArrayList<String>) : ArrayList<String> {
         val result: ArrayList<String> = ArrayList()
         for (permission in permissions) {
@@ -137,22 +153,20 @@ class MainFragment : Fragment(), OnMapReadyCallback {
 
     private fun checkPermission() =
         ActivityCompat.checkSelfPermission(
-            requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
+            requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(
-                    requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
+                    requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
 
-    override fun onMapReady(googleMap: GoogleMap) {
+    override fun onMapReady(map: GoogleMap) {
         if (checkPermission())
             return
 
-
-        val mapFragment = requireActivity().supportFragmentManager
-            .findFragmentById(R.id.map_fragment) as SupportMapFragment
-        mapFragment.getMapAsync(this)
         // Show the current device's location as a blue dot.
-        googleMap.isMyLocationEnabled = true
+        map.isMyLocationEnabled = true
+
+
     }
 
     /**
