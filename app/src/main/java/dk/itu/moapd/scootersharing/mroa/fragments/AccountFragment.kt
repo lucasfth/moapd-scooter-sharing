@@ -47,7 +47,6 @@ class AccountFragment : Fragment(), ItemClickListener {
         scooterController = ScooterController()
         MainActivity.auth.currentUser?.let {
             val query = MainActivity.database.child("scooters")
-                .child(it.uid)
             val options = FirebaseRecyclerOptions.Builder<Scooter>()
                 .setQuery(query, Scooter::class.java)
                 .setLifecycleOwner(this)

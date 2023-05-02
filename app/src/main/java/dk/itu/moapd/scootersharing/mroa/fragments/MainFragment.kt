@@ -13,11 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.LocationSource
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 import dk.itu.moapd.scootersharing.mroa.R
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
@@ -73,11 +75,7 @@ class MainFragment : Fragment(), OnMapReadyCallback {
             requireActivity().bindService(it, mServiceConnection, BIND_AUTO_CREATE)
         }
     }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
+    
     /**
      * On create view
      *
@@ -166,7 +164,9 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         // Show the current device's location as a blue dot.
         map.isMyLocationEnabled = true
 
-
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(PrefSingleton.getLat().toDouble(),
+            PrefSingleton.getLng().toDouble()
+        ), 13f))
     }
 
     /**
