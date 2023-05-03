@@ -45,15 +45,13 @@ class ScooterController {
     }
 
 
-    fun createScooter(scooterName: EditText) : Scooter {
-        val scooter = Scooter(
+    fun createScooter(scooterName: EditText): Scooter {
+        return Scooter(
             scooterName.text.toString().trim(),
             System.currentTimeMillis(),
             PrefSingleton.getLat(),
             PrefSingleton.getLng()
         )
-
-        return scooter
     }
 
 

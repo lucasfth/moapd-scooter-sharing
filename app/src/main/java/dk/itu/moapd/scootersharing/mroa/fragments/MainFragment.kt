@@ -26,8 +26,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 import dk.itu.moapd.scootersharing.mroa.R
+import dk.itu.moapd.scootersharing.mroa.ScooterController
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
+import dk.itu.moapd.scootersharing.mroa.models.Scooter
 import dk.itu.moapd.scootersharing.mroa.services.LocationService
 import java.util.*
 
@@ -199,8 +201,26 @@ class MainFragment : Fragment(), OnMapReadyCallback {
 
         map.setOnMarkerClickListener { marker ->
             val markerName = marker.title
+            if (markerName != null) {
+                scooterSelected(markerName)
+            }
             println("$markerName") // This print the marker that has been clicked
             false
+        }
+    }
+
+    private fun scooterSelected(scooter: String) {
+        val navHostFragment = activity?.supportFragmentManager
+            ?.findFragmentById(R.id.fragment_container_view) as NavHostFragment
+        val navController = navHostFragment.navController
+        println("---------------")
+        println(scooterRef.orderByChild("name").equalTo(scooter)) // We should do more stuff here
+        println("---------------")
+
+        with (binding) {
+            clickButtonSettings.setOnClickListener {
+                navController.navigate(R.id.selectedScooterFragment)
+            }
         }
     }
 
