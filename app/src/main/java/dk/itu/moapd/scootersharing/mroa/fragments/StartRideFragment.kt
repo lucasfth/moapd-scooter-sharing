@@ -113,11 +113,7 @@ class StartRideFragment : Fragment() {
                 val auth = MainActivity.auth
                 val database = MainActivity.database
                 auth.currentUser?.let { user ->
-                    val uid = database.child("scooters")
-                        .push()
-                        .key
-
-                    uid?.let {
+                    scooter.name?.let {
                         database.child("scooters")
                             .child(it)
                             .setValue(scooter)

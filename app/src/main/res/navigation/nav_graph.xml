@@ -13,6 +13,9 @@
         <action
             android:id="@+id/show_settings"
             app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/show_selected_ride"
+            app:destination="@id/selectedScooterFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"

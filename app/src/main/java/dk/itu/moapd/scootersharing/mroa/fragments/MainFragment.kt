@@ -10,13 +10,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -26,7 +24,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 import dk.itu.moapd.scootersharing.mroa.R
-import dk.itu.moapd.scootersharing.mroa.ScooterController
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
 import dk.itu.moapd.scootersharing.mroa.models.Scooter
@@ -76,6 +73,7 @@ class MainFragment : Fragment(), OnMapReadyCallback {
     companion object {
         private val TAG = MainFragment::class.qualifiedName
         private const val ALL_PERMISSIONS_RESULT = 1011
+        var selectedScooter = Scooter()
     }
 
     override fun onResume() {
@@ -204,24 +202,28 @@ class MainFragment : Fragment(), OnMapReadyCallback {
             if (markerName != null) {
                 scooterSelected(markerName)
             }
-            println("$markerName") // This print the marker that has been clicked
             false
         }
     }
 
-    private fun scooterSelected(scooter: String) {
+    private fun scooterSelected(scooterName: String) {
         val navHostFragment = activity?.supportFragmentManager
             ?.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         val navController = navHostFragment.navController
         println("---------------")
-        println(scooterRef.orderByChild("name").equalTo(scooter)) // We should do more stuff here
-        println("---------------")
-
-        with (binding) {
-            clickButtonSettings.setOnClickListener {
-                navController.navigate(R.id.selectedScooterFragment)
+        scooterRef.child(scooterName).get().addOnSuccessListener { ds ->
+            println(ds.child("name"))
+            with(selectedScooter) {
+                name = ds.child("name").value as String?
+                lat = ds.child("lat").value as Double?
+                lng = ds.child("lng").value as Double?
+                timestamp = ds.child("timestamp").value as Long?
+                println(name)
             }
         }
+        println("---------------")
+
+        navController.navigate(R.id.show_selected_ride)
     }
 
     /**
