@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentSelectedScooterBinding
 
@@ -36,11 +37,19 @@ class SelectedScooterFragment : Fragment() {
 
     private val selectedScooter = MainFragment.selectedScooter
 
+    private var hasUnlockedScooter = false
+
+    private lateinit var cameraPermissions: Array<String>
+
+    companion object {
+        private const val CAMERA_REQUEST_CODE = 100
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSelectedScooterBinding.inflate(inflater, container, false)
 
         MainActivity.storage.child("scooters").child("${selectedScooter.name}.png").downloadUrl.addOnSuccessListener {
@@ -56,6 +65,18 @@ class SelectedScooterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding) {
             scooterInfoPanel.text = selectedScooter.name
+
+            clickScanQr.setOnClickListener {
+
+            }
+
+            clickStart.setOnClickListener {
+                if (hasUnlockedScooter) {
+                    // move now driving fragment
+                } else {
+                    Snackbar.make(root, "Unlock scooter before starting the ride", Snackbar.LENGTH_SHORT).show()
+                }
+            }
         }
         super.onViewCreated(view, savedInstanceState)
     }
