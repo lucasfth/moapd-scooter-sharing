@@ -18,7 +18,7 @@ class FirebaseAdapter (private val itemClickListener: ItemClickListener, options
                 with (binding) {
                     receiptName.text = receipt.name
                     receiptPrice.text = receipt.price.toString()
-                    receiptTimestamp.text = Date(receipt.timestamp).toString()
+                    receiptTimestamp.text = Date(receipt.timestamp!!).toString()
                     receiptMaxSpeed.text = receipt.maxSpeed.toString()
                 }
             }

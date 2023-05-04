@@ -16,8 +16,11 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 import dk.itu.moapd.scootersharing.mroa.R
+import dk.itu.moapd.scootersharing.mroa.ScooterController
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentRideBinding
+import dk.itu.moapd.scootersharing.mroa.models.Receipt
+import dk.itu.moapd.scootersharing.mroa.models.Scooter
 import dk.itu.moapd.scootersharing.mroa.services.LocationService
 import java.io.ByteArrayOutputStream
 import java.util.*
@@ -164,6 +167,33 @@ class RideFragment : Fragment() {
 
             storage.putBytes(newData)
                 .addOnSuccessListener {
+                    val receipt = Receipt(MainFragment.selectedScooter.name!!, System.currentTimeMillis(), ((seconds % 3600) / 60)*5, maxSpeed)
+
+                    val auth = MainActivity.auth
+                    val database = MainActivity.database
+                    auth.currentUser?.let {user ->
+                        val uid = database.child("receipts")
+                            .child(user.uid)
+                            .push()
+                            .key
+
+                        uid?.let {
+                            database.child("receipts")
+                                .child(user.uid)
+                                .child(it)
+                                .setValue(receipt)
+                        }
+                    }
+                    val controller = ScooterController()
+                    val scooter = controller.createScooter(MainFragment.selectedScooter.name!!)
+
+                    scooter.name?.let {
+                        database.child("scooters")
+                            .child(it)
+                            .setValue(scooter)
+                    }
+
+
                     val navHostFragment = activity?.supportFragmentManager
                         ?.findFragmentById(R.id.fragment_container_view) as NavHostFragment
 

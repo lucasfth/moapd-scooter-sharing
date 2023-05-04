@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.storage.StorageException
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -66,12 +67,23 @@ class SelectedScooterFragment : Fragment() {
     ): View {
         _binding = FragmentSelectedScooterBinding.inflate(inflater, container, false)
 
-        MainActivity.storage.child("scooters").child("${selectedScooter.name}.png").downloadUrl.addOnSuccessListener {
-            Glide.with(binding.scooterImage.context)
-                .load(it)
-                .centerCrop()
-                .into(binding.scooterImage)
-        }
+        val scooterImageUrl = MainActivity.storage.child("scooters").child("${selectedScooter.name}.png").downloadUrl
+            scooterImageUrl.addOnSuccessListener {
+                Glide.with(binding.scooterImage.context)
+                    .load(it)
+                    .centerCrop()
+                    .into(binding.scooterImage)
+            }
+        scooterImageUrl.addOnFailureListener {
+                    MainActivity.storage.child("scooters")
+                        .child("scotter.png").downloadUrl.addOnSuccessListener {
+                            Glide.with(binding.scooterImage.context)
+                                .load(it)
+                                .centerCrop()
+                                .into(binding.scooterImage)
+                            println("Got the image")
+                        }
+                }
 
         scanningOptions = BarcodeScannerOptions.Builder().setBarcodeFormats(Barcode.FORMAT_QR_CODE).build()
         scanner = BarcodeScanning.getClient(scanningOptions)
@@ -94,10 +106,6 @@ class SelectedScooterFragment : Fragment() {
 
         with(binding) {
             scooterInfoPanel.text = selectedScooter.name
-
-            clickScanQr.setOnClickListener {
-
-            }
 
             clickStart.setOnClickListener {
                 if (MainFragment.selectedScooter.name == scannedQr) {

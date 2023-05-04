@@ -54,6 +54,15 @@ class ScooterController {
         )
     }
 
+    fun createScooter(scooterName: String): Scooter {
+        return Scooter(
+            scooterName,
+            System.currentTimeMillis(),
+            PrefSingleton.getLat(),
+            PrefSingleton.getLng()
+        )
+    }
+
 
     /**
      * Clear input

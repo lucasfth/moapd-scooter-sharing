@@ -1,3 +1,6 @@
 package dk.itu.moapd.scootersharing.mroa.models
 
-data class Receipt(var name: String, var timestamp: Long, val price: Int, val maxSpeed: Int)
+import com.google.firebase.database.IgnoreExtraProperties
+
+@IgnoreExtraProperties
+data class Receipt(var name: String? = null, var timestamp: Long? = null, val price: Int? = null, val maxSpeed: Float? = null)

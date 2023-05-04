@@ -194,6 +194,8 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         if (checkPermission())
             return
 
+
+        map.clear()
         // Show the current device's location as a blue dot.
         map.isMyLocationEnabled = true
 
@@ -201,6 +203,8 @@ class MainFragment : Fragment(), OnMapReadyCallback {
             PrefSingleton.getLat(),
             PrefSingleton.getLng()
         ), 13f))
+
+
 
         scooterRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot){
