@@ -4,8 +4,11 @@ import android.Manifest
 import android.content.*
 import android.content.Context.BIND_AUTO_CREATE
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,10 +21,18 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.maps.GeoApiContext
+import com.google.maps.PendingResult
+import com.google.maps.model.DirectionsResult
+import com.google.maps.model.TravelMode
 import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 import dk.itu.moapd.scootersharing.mroa.R
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
@@ -29,6 +40,7 @@ import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
 import dk.itu.moapd.scootersharing.mroa.models.Scooter
 import dk.itu.moapd.scootersharing.mroa.services.LocationService
 import java.util.*
+import com.google.maps.DirectionsApiRequest as DirectionsApiRequest
 
 
 /**
@@ -51,28 +63,31 @@ class MainFragment : Fragment(), OnMapReadyCallback {
             "Is the view visible?"
         }
 
-    var mLocationService : LocationService? = null
+    var locationService : LocationService? = null
 
     var mBound = false
 
-    var scooterRef = MainActivity.database.child("scooters")
+    private var scooterRef = MainActivity.database.child("scooters")
+
+    private var polyline: Polyline? = null
+
+    private var selectedMarker: Marker? = null
 
 
     private val mServiceConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             val binder: LocationService.LocalBinder = service as LocationService.LocalBinder
-            mLocationService = binder.getService()
+            locationService = binder.getService()
             mBound = true
         }
 
         override fun onServiceDisconnected(name: ComponentName) {
-            mLocationService = null
+            locationService = null
             mBound = false
         }
     }
     companion object {
         private val TAG = MainFragment::class.qualifiedName
-        private const val ALL_PERMISSIONS_RESULT = 1011
         var selectedScooter = Scooter()
     }
 
@@ -94,7 +109,7 @@ class MainFragment : Fragment(), OnMapReadyCallback {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
@@ -125,6 +140,14 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         with (binding) {
             clickButtonSettings.setOnClickListener {
                 navController.navigate(R.id.show_settings)
+            }
+
+            clickButtonSelectRide.setOnClickListener {
+                if (selectedScooter.name != null) {
+                    navController.navigate(R.id.show_selected_ride)
+                } else {
+                    Snackbar.make(root, "No scooter selected", Snackbar.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -173,8 +196,9 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         // Show the current device's location as a blue dot.
         map.isMyLocationEnabled = true
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(PrefSingleton.getLat().toDouble(),
-            PrefSingleton.getLng().toDouble()
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(
+            PrefSingleton.getLat(),
+            PrefSingleton.getLng()
         ), 13f))
 
         scooterRef.addValueEventListener(object : ValueEventListener {
@@ -197,20 +221,28 @@ class MainFragment : Fragment(), OnMapReadyCallback {
             }
         })
 
+        val geoApiContext = GeoApiContext.Builder()
+            .apiKey(getString(R.string.google_api_key))
+            .build()
+
+
+
         map.setOnMarkerClickListener { marker ->
             val markerName = marker.title
-            if (markerName != null) {
-                scooterSelected(markerName)
+            if (markerName != null && marker != selectedMarker) {
+                polyline?.remove()
+                selectedMarker = marker
+                scooterSelected(markerName, geoApiContext, map)
             }
             false
         }
+
+
     }
 
-    private fun scooterSelected(scooterName: String) {
-        val navHostFragment = activity?.supportFragmentManager
-            ?.findFragmentById(R.id.fragment_container_view) as NavHostFragment
-        val navController = navHostFragment.navController
-        println("---------------")
+
+
+    private fun scooterSelected(scooterName: String, geoApiContext: GeoApiContext, map: GoogleMap) {
         scooterRef.child(scooterName).get().addOnSuccessListener { ds ->
             println(ds.child("name"))
             with(selectedScooter) {
@@ -218,12 +250,34 @@ class MainFragment : Fragment(), OnMapReadyCallback {
                 lat = ds.child("lat").value as Double?
                 lng = ds.child("lng").value as Double?
                 timestamp = ds.child("timestamp").value as Long?
-                println(name)
+                val directionsApi = DirectionsApiRequest(geoApiContext)
+                    .mode(TravelMode.WALKING)
+                    .origin(com.google.maps.model.LatLng(PrefSingleton.getLat(), PrefSingleton.getLng()))
+                    .destination(com.google.maps.model.LatLng(lat!!, lng!!))
+
+                directionsApi.setCallback(object : PendingResult.Callback<DirectionsResult> {
+                    override fun onResult(result: DirectionsResult?) {
+                        val handler = Handler(Looper.getMainLooper())
+                        handler.post {
+                            val route = result?.routes?.get(0)
+                            val polylineOptions = PolylineOptions()
+                            println("Beginning to load polyline")
+                            for (position in route?.overviewPolyline?.decodePath()!!) {
+                                polylineOptions.add(LatLng(position.lat, position.lng))
+                            }
+                            polylineOptions.color(Color.BLUE).width(10f)
+                            polyline = map.addPolyline(polylineOptions)
+                        }
+                    }
+
+                    override fun onFailure(e: Throwable?) {
+                        if (e != null) {
+                            Log.e(e.message, "Failed to draw route")
+                        }
+                    }
+                })
             }
         }
-        println("---------------")
-
-        navController.navigate(R.id.show_selected_ride)
     }
 
     /**
