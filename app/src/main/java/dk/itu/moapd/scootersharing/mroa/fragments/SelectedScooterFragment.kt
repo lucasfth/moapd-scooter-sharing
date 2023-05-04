@@ -98,7 +98,7 @@ class SelectedScooterFragment : Fragment() {
             }
 
             clickStart.setOnClickListener {
-                if ("https://www.youtube.com/watch?v=dQw4w9WgXcQ" == scannedQr) {
+                if (MainFragment.selectedScooter.name == scannedQr) {
                     Snackbar.make(root, "It motherfucking worked", Snackbar.LENGTH_SHORT).show()
                 } else {
                     Snackbar.make(root, "Unlock scooter before starting the ride", Snackbar.LENGTH_SHORT).show()
