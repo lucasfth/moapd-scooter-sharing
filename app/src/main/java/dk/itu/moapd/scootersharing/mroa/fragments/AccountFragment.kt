@@ -16,9 +16,8 @@ import dk.itu.moapd.scootersharing.mroa.activities.LoginActivity
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.adapters.FirebaseAdapter
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentAccountBinding
-import dk.itu.moapd.scootersharing.mroa.databinding.FragmentMainBinding
 import dk.itu.moapd.scootersharing.mroa.interfaces.ItemClickListener
-import dk.itu.moapd.scootersharing.mroa.models.Scooter
+import dk.itu.moapd.scootersharing.mroa.models.Receipt
 
 
 /**
@@ -46,9 +45,9 @@ class AccountFragment : Fragment(), ItemClickListener {
         super.onCreate(savedInstanceState)
         scooterController = ScooterController()
         MainActivity.auth.currentUser?.let {
-            val query = MainActivity.database.child("scooters")
-            val options = FirebaseRecyclerOptions.Builder<Scooter>()
-                .setQuery(query, Scooter::class.java)
+            val query = MainActivity.database.child("receipts").child(it.uid)
+            val options = FirebaseRecyclerOptions.Builder<Receipt>()
+                .setQuery(query, Receipt::class.java)
                 .setLifecycleOwner(this)
                 .build()
             adapter = FirebaseAdapter(this, options)
@@ -89,15 +88,15 @@ class AccountFragment : Fragment(), ItemClickListener {
         private lateinit var adapter: FirebaseAdapter
     }
 
-    override fun onItemClickListener(scooter: Scooter, position: Int) {
+    override fun onItemClickListener(receipt: Receipt, position: Int) {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle("Deletion Confirmation Alertion!!")
-            .setMessage("Do you really want to delete ${scooter.name}???")
+            .setMessage("Do you really want to delete receipt ${receipt.name}???")
             .setNeutralButton("Cancelado") { dialog, which -> }
             .setPositiveButton("Yesh please") {dialog, which ->
                 adapter.getRef(position).removeValue()
                 scooterController.showSnackMessage(binding.root,
-                    "Deleted ${scooter.name} placed at ${scooter.lat}, ${scooter.lng}")
+                    "Deleted ${receipt.name} with max speed ${receipt.maxSpeed}")
             }.show()
     }
 
