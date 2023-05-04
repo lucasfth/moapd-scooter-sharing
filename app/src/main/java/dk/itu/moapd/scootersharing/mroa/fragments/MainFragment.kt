@@ -249,7 +249,6 @@ class MainFragment : Fragment(), OnMapReadyCallback {
 
     private fun scooterSelected(scooterName: String, geoApiContext: GeoApiContext, map: GoogleMap) {
         scooterRef.child(scooterName).get().addOnSuccessListener { ds ->
-            println(ds.child("name"))
             with(selectedScooter) {
                 name = ds.child("name").value as String?
                 lat = ds.child("lat").value as Double?
@@ -266,7 +265,6 @@ class MainFragment : Fragment(), OnMapReadyCallback {
                         handler.post {
                             val route = result?.routes?.get(0)
                             val polylineOptions = PolylineOptions()
-                            println("Beginning to load polyline")
                             for (position in route?.overviewPolyline?.decodePath()!!) {
                                 polylineOptions.add(LatLng(position.lat, position.lng))
                             }

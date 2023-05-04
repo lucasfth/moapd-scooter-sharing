@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,26 +13,20 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.storage.StorageException
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.barcode.common.Barcode.BarcodeFormat
 import com.google.mlkit.vision.common.InputImage
 import dk.itu.moapd.scootersharing.mroa.R
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentSelectedScooterBinding
 import java.util.concurrent.Executors
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SelectedScooterFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SelectedScooterFragment : Fragment() {
 
     /**
@@ -68,7 +61,7 @@ class SelectedScooterFragment : Fragment() {
         _binding = FragmentSelectedScooterBinding.inflate(inflater, container, false)
 
         val scooterImageUrl = MainActivity.storage.child("scooters").child("${selectedScooter.name}.png").downloadUrl
-            scooterImageUrl.addOnSuccessListener {
+        scooterImageUrl.addOnSuccessListener {
                 Glide.with(binding.scooterImage.context)
                     .load(it)
                     .centerCrop()
@@ -81,7 +74,6 @@ class SelectedScooterFragment : Fragment() {
                                 .load(it)
                                 .centerCrop()
                                 .into(binding.scooterImage)
-                            println("Got the image")
                         }
                 }
 
@@ -91,11 +83,10 @@ class SelectedScooterFragment : Fragment() {
 
         analysisUseCase.setAnalyzer(
             // newSingleThreadExecutor() will let us perform analysis on a single worker thread
-            Executors.newSingleThreadExecutor(),
-            { imageProxy ->
-                processImageProxy(scanner, imageProxy)
-            }
-        )
+            Executors.newSingleThreadExecutor()
+        ) { imageProxy ->
+            processImageProxy(scanner, imageProxy)
+        }
 
         return binding.root
     }
@@ -175,7 +166,6 @@ class SelectedScooterFragment : Fragment() {
                     // `rawValue` is the decoded value of the barcode
                     barcode?.rawValue?.let { value ->
                         // update our textView to show the decoded value
-                        println("We got this: $value")
                         scannedQr = value
                         Snackbar.make(binding.root, "We got this $value", Snackbar.LENGTH_SHORT).show()
                     }

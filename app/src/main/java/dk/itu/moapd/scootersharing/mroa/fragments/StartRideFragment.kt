@@ -69,7 +69,7 @@ class StartRideFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentStartRideBinding.inflate(inflater, container, false)
         return binding.root
@@ -112,7 +112,7 @@ class StartRideFragment : Fragment() {
                 scooter = createScooter(scooterName)
                 val auth = MainActivity.auth
                 val database = MainActivity.database
-                auth.currentUser?.let { user ->
+                auth.currentUser?.let {
                     scooter.name?.let {
                         database.child("scooters")
                             .child(it)

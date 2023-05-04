@@ -10,7 +10,6 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.postDelayed
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
@@ -20,11 +19,9 @@ import dk.itu.moapd.scootersharing.mroa.ScooterController
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentRideBinding
 import dk.itu.moapd.scootersharing.mroa.models.Receipt
-import dk.itu.moapd.scootersharing.mroa.models.Scooter
 import dk.itu.moapd.scootersharing.mroa.services.LocationService
 import java.io.ByteArrayOutputStream
 import java.util.*
-import kotlin.math.max
 
 class RideFragment : Fragment() {
 
@@ -70,10 +67,6 @@ class RideFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onResume() {
         Intent(requireContext(), LocationService::class.java).also {
             requireActivity().bindService(it, mServiceConnection, Context.BIND_AUTO_CREATE)
@@ -84,7 +77,7 @@ class RideFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRideBinding.inflate(inflater, container, false)
         runTimer()
         if(savedInstanceState != null) {

@@ -19,12 +19,6 @@ import dk.itu.moapd.scootersharing.mroa.databinding.FragmentAccountBinding
 import dk.itu.moapd.scootersharing.mroa.interfaces.ItemClickListener
 import dk.itu.moapd.scootersharing.mroa.models.Receipt
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AccountFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AccountFragment : Fragment(), ItemClickListener {
     /**
      * _binding
@@ -57,7 +51,7 @@ class AccountFragment : Fragment(), ItemClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
@@ -92,17 +86,14 @@ class AccountFragment : Fragment(), ItemClickListener {
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle("Deletion Confirmation Alertion!!")
             .setMessage("Do you really want to delete receipt ${receipt.name}???")
-            .setNeutralButton("Cancelado") { dialog, which -> }
-            .setPositiveButton("Yesh please") {dialog, which ->
+            .setNeutralButton("Cancelado") { _, _ -> }
+            .setPositiveButton("Yesh please") { _, _ ->
                 adapter.getRef(position).removeValue()
                 scooterController.showSnackMessage(binding.root,
                     "Deleted ${receipt.name} with max speed ${receipt.maxSpeed}")
             }.show()
     }
 
-    /**
-     * todo
-     */
     private fun startLoginActivity() {
         val intent = Intent(activity, LoginActivity::class.java)
 

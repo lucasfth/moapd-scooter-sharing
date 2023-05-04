@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
 
 
     companion object {
-        private val TAG = MainActivity::class.qualifiedName
         lateinit var auth: FirebaseAuth
         lateinit var database: DatabaseReference
         lateinit var storage: StorageReference
@@ -81,17 +80,7 @@ class MainActivity : AppCompatActivity() {
             startLoginActivity()
     }
 
-    override fun onStart() {
-        super.onStart()
 
-        with (mainBinding) {
-
-        }
-    }
-
-    /**
-     * todo
-     */
     private fun startLoginActivity() {
         val intent = Intent(this, LoginActivity::class.java)
 

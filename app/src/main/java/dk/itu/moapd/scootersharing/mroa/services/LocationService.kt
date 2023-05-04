@@ -1,28 +1,21 @@
 package dk.itu.moapd.scootersharing.mroa.services
 
-import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 import android.Manifest
-import android.app.*
+import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
-import android.os.*
-import android.provider.ContactsContract.Directory.PACKAGE_NAME
+import android.os.Binder
+import android.os.IBinder
+import android.os.Looper
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
-import android.os.IBinder
+import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 
 
 class LocationService : Service() {
-    private val PACKAGE_NAME =
-        "dk.itu.moapd.scootersharing.mroa.services"
 
     private val binder: IBinder = LocalBinder()
-
-    /**
-     * Contains parameters used by [com.google.android.gms.location.FusedLocationProviderApi].
-     */
-    private lateinit var locationRequest: LocationRequest
 
     /**
      * Provides access to the Fused Location Provider API.
@@ -34,16 +27,6 @@ class LocationService : Service() {
      */
     private lateinit var locationCallback: LocationCallback
 
-    private lateinit var serviceHandler: Handler
-
-    /**
-     * The current location.
-     */
-    private lateinit var location: Location
-
-    companion object {
-        val EXTRA_LOCATION = "$PACKAGE_NAME.location"
-    }
 
     override fun onCreate() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -53,7 +36,7 @@ class LocationService : Service() {
         startLocationAware()
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent?): IBinder {
         subscribeToLocationUpdates()
         return binder
     }
@@ -87,7 +70,6 @@ class LocationService : Service() {
         PrefSingleton.setLat(location.latitude)
         PrefSingleton.setLng(location.longitude)
         PrefSingleton.setSpeed(location.speed*3.6f)
-        println(location.toString())
     }
 
     /**

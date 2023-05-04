@@ -29,7 +29,6 @@ class ScooterController {
      * user intractable input fields.
      *
      * @param scooterName
-     * @param scooterLocation
      * @param binding
      */
     fun checkInputError(scooterName: EditText, binding: ViewBinding) {
@@ -70,7 +69,6 @@ class ScooterController {
      * Clear user accessible input fields.
      *
      * @param scooterName
-     * @param scooterLocation
      */
     fun clearInput(scooterName: EditText) {
         scooterName.setText("")
