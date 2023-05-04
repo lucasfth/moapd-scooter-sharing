@@ -72,8 +72,6 @@ class MainActivity : AppCompatActivity() {
         storage = Firebase.storage(BUCKET_URL).reference
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
-        PrefSingleton.init(this)
-
         setContentView(mainBinding.root)
 
         if (auth.currentUser == null)
