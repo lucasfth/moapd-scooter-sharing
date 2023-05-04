@@ -110,7 +110,7 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
+        PrefSingleton.init(requireContext())
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
         val mapFragment = childFragmentManager
