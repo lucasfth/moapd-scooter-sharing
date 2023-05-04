@@ -160,6 +160,7 @@ class MainFragment : Fragment(), OnMapReadyCallback {
         val permissions: ArrayList<String> = ArrayList()
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        permissions.add(Manifest.permission.CAMERA)
 
         // Check which permissions is needed to ask to the user.
         val permissionsToRequest = permissionsToRequest(permissions)
