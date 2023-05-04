@@ -44,5 +44,14 @@
         android:id="@+id/selectedScooterFragment"
         android:name="dk.itu.moapd.scootersharing.mroa.fragments.SelectedScooterFragment"
         android:label="fragment_selected_scooter"
-        tools:layout="@layout/fragment_selected_scooter" />
+        tools:layout="@layout/fragment_selected_scooter" >
+        <action
+            android:id="@+id/show_ride"
+            app:destination="@id/rideFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rideFragment"
+        android:name="dk.itu.moapd.scootersharing.mroa.fragments.RideFragment"
+        android:label="fragment_ride"
+        tools:layout="@layout/fragment_ride" />
 </navigation>

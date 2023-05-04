@@ -18,4 +18,5 @@
     <string name="pic_of_current_selected_scooter">pic of current selected scooter</string>
     <string name="mapsApiKey">AIzaSyAELWLzoQkI5RODiv5s1ZRXhoBimQvjheY</string>
     <string name="select_scooter">Select Scooter</string>
+    <string name="end_ride">End ride</string>
 </resources>

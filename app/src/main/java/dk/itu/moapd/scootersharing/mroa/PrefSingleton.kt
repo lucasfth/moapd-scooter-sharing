@@ -27,4 +27,12 @@ object PrefSingleton {
     fun setLng(lng: Double) {
         prefs.edit().putFloat("lng", lng.toFloat()).apply()
     }
+
+    fun setSpeed(spd: Float) {
+        prefs.edit().putFloat("spd", spd).apply()
+    }
+
+    fun getSpeed(): Float {
+        return prefs.getFloat("spd", 0f)
+    }
 }

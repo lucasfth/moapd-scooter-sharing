@@ -86,6 +86,7 @@ class LocationService : Service() {
     private fun sendLocationBroadcast(location: Location) {
         PrefSingleton.setLat(location.latitude)
         PrefSingleton.setLng(location.longitude)
+        PrefSingleton.setSpeed(location.speed*3.6f)
         println(location.toString())
     }
 

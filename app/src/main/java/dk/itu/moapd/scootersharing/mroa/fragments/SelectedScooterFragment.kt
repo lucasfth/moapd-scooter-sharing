@@ -14,6 +14,7 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -22,6 +23,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.barcode.common.Barcode.BarcodeFormat
 import com.google.mlkit.vision.common.InputImage
+import dk.itu.moapd.scootersharing.mroa.R
 import dk.itu.moapd.scootersharing.mroa.activities.MainActivity
 import dk.itu.moapd.scootersharing.mroa.databinding.FragmentSelectedScooterBinding
 import java.util.concurrent.Executors
@@ -99,7 +101,11 @@ class SelectedScooterFragment : Fragment() {
 
             clickStart.setOnClickListener {
                 if (MainFragment.selectedScooter.name == scannedQr) {
-                    Snackbar.make(root, "It motherfucking worked", Snackbar.LENGTH_SHORT).show()
+                    val navHostFragment = activity?.supportFragmentManager
+                        ?.findFragmentById(R.id.fragment_container_view) as NavHostFragment
+
+                    val navController = navHostFragment.navController
+                    navController.navigate(R.id.show_ride)
                 } else {
                     Snackbar.make(root, "Unlock scooter before starting the ride", Snackbar.LENGTH_SHORT).show()
                 }
