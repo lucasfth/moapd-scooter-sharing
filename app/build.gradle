@@ -9,6 +9,10 @@ android {
     namespace 'dk.itu.moapd.scootersharing.mroa'
     compileSdk 33
 
+    viewBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "dk.itu.moapd.scootersharing.mroa"
         minSdk 25
