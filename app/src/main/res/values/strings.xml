@@ -6,7 +6,16 @@
     <string name="scooter_name">Input scooter name</string>
     <string name="logo">Logo</string>
     <string name="list_rides">List rides</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_out">Sign out</string>
+    <string name="available_rides">Scooter List</string>
+    <string name="account_name">Settings</string>
+    <string name="scooter_sharing">Scooter Sharing</string>
+    <string name="admin">Admin</string>
+    <string name="start">start</string>
+    <string name="unlock">Unlock</string>
+    <string name="pic_of_current_selected_scooter">pic of current selected scooter</string>
+    <string name="mapsApiKey">AIzaSyAELWLzoQkI5RODiv5s1ZRXhoBimQvjheY</string>
+    <string name="select_scooter">Select Scooter</string>
+    <string name="end_ride">End ride</string>
 </resources>

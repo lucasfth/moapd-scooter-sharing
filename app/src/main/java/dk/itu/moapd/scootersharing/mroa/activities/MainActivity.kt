@@ -23,6 +23,7 @@
 
 package dk.itu.moapd.scootersharing.mroa.activities
 
+import dk.itu.moapd.scootersharing.mroa.PrefSingleton
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -30,7 +31,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import dk.itu.moapd.scootersharing.mroa.databinding.ActivityMainBinding
@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
 
 
     companion object {
-        private val TAG = MainActivity::class.qualifiedName
         lateinit var auth: FirebaseAuth
         lateinit var database: DatabaseReference
         lateinit var storage: StorageReference
@@ -68,8 +67,6 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //WindowCompat.setDecorFitsSystemWindows(window, false)
-        // Singleton to share an object between the app activities .
         auth = FirebaseAuth.getInstance()
         database = Firebase.database(DATABASE_URL).reference
         storage = Firebase.storage(BUCKET_URL).reference
@@ -81,9 +78,7 @@ class MainActivity : AppCompatActivity() {
             startLoginActivity()
     }
 
-    /**
-     * todo
-     */
+
     private fun startLoginActivity() {
         val intent = Intent(this, LoginActivity::class.java)
 

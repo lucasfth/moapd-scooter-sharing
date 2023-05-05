@@ -6,19 +6,24 @@
     android:orientation="horizontal"
     android:padding="10dp">
     <TextView
-        android:id="@+id/scooter_name"
+        android:id="@+id/receipt_name"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:layout_weight="1"
         />
     <TextView
-        android:id="@+id/scooter_location"
+        android:id="@+id/receipt_timestamp"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:layout_weight="1"/>
     <TextView
-        android:id="@+id/scooter_timestamp"
-        android:layout_height="wrap_content"
+        android:id="@+id/receipt_price"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/receipt_max_speed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"/>
 </LinearLayout>

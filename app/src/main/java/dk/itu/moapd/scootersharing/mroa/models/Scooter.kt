@@ -7,12 +7,12 @@ import java.util.*
  * Scooter is a data class that represents a Scooter.
  */
 @IgnoreExtraProperties
-data class Scooter (val name : String? = null, var location : String? = null, var timestamp: Long? = null) {
+data class Scooter (var name : String? = null, var timestamp: Long? = null, var lat: Double? = null, var lng: Double? = null) {
 
     /**
      * Formats how the Scooter should be made into a string
      */
     override fun toString(): String {
-        return "[Scooter] $name is placed at $location at timestamp ${Date(timestamp!!)}"
+        return "[Scooter] $name is placed at $lat, $lng at timestamp ${Date(timestamp!!)}"
     }
 }
