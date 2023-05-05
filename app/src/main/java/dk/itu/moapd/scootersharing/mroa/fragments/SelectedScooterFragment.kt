@@ -44,7 +44,7 @@ class SelectedScooterFragment : Fragment() {
 
     private val selectedScooter = MainFragment.selectedScooter
 
-    private lateinit var scannedQr: String
+    private var scannedQr = ""
 
     private lateinit var scanningOptions: BarcodeScannerOptions
 
@@ -167,7 +167,7 @@ class SelectedScooterFragment : Fragment() {
                     barcode?.rawValue?.let { value ->
                         // update our textView to show the decoded value
                         scannedQr = value
-                        Snackbar.make(binding.root, "We got this $value", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(binding.root, "Scanned $value", Snackbar.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener {
