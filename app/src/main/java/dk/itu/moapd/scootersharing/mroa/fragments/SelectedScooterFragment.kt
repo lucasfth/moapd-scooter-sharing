@@ -60,6 +60,10 @@ class SelectedScooterFragment : Fragment() {
     ): View {
         _binding = FragmentSelectedScooterBinding.inflate(inflater, container, false)
 
+        if (savedInstanceState != null) {
+            scannedQr = savedInstanceState.getString("scannedQR").toString()
+        }
+
         val scooterImageUrl = MainActivity.storage.child("scooters").child("${selectedScooter.name}.png").downloadUrl
         scooterImageUrl.addOnSuccessListener {
                 Glide.with(binding.scooterImage.context)
@@ -145,6 +149,11 @@ class SelectedScooterFragment : Fragment() {
                 Log.e(TAG, illegalArgumentException.message.orEmpty())
             }
         }, ContextCompat.getMainExecutor(requireContext()))
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("scannedQR", scannedQr)
+        super.onSaveInstanceState(outState)
     }
 
     @SuppressLint("UnsafeOptInUsageError")
